@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ==============================
+   BuildMart Color Variables
+============================== */
+
+:root {
+  --primary-yellow: #FDC716;
+  --hover-yellow: #E5B20F;
+
+  /* Dark Theme Colors */
+  --charcoal-black: #292929;
+  --deep-charcoal: #25272A;
+  --industrial-blue-grey: #384452;
+
+  /* Background Colors */
+  --off-white-background: #F4F4F2;
+  --white-cards: #FFFFFF;
+
+  /* Text Colors */
+  --primary-text: #202124;
+  --secondary-text: #565553;
+
+  /* Border Colors */
+  --border-color: #D9E3E9;
+}
+
+/* ==============================
+   Baloo 2 Fonts
+   Location: src/assets/font/
+============================== */
+
+
+
+
+
+@font-face {
+  font-family: "Baloo2-Bold";
+  src: url("/fonts/Baloo2-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baloo2-Medium";
+  src: url("/fonts/Baloo2-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Baloo2-Regular";
+  src: url("/fonts/Baloo2-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins-Medium";
+  src: url("/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ==============================
+   Global Styles
+============================== */
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins-Regular", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--off-white-background);
+  color: var(--primary-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Baloo2-Bold", sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
