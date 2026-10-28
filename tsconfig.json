@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "src/app/(guset)/page.js", "src/app/(guset)/layout.js"  ],
+, "src/app/(guest)/page.js", "src/app/(guest)/layout.js"  ],
   "exclude": ["node_modules"]
 }
