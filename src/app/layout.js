@@ -2,16 +2,13 @@ import "./globals.css";
 
 export const metadata = {
   title: "BuildMart",
-  description: "BuildMart Construction Materials",
+  description: "Construction Material Management and Comparison Platform",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
-        {children}
-        
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
