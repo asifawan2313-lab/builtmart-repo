@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const MAX_TAGS = 4; // is se zyada tags "+N" mein badal jate hain
 
@@ -12,7 +13,7 @@ export function Icon({ children, className = "h-4 w-4" }) {
 }
 
 export default function SupplierCard({ supplier, index = 0 }) {
-  const { name, initials, location, rating, reviews, description, tags, image, verified } = supplier;
+  const { name, slug, initials, location, rating, reviews, description, tags, image, verified } = supplier;
   const extra = tags.length - MAX_TAGS;
 
   return (
@@ -72,9 +73,9 @@ export default function SupplierCard({ supplier, index = 0 }) {
           {extra > 0 && <span className="rounded-full bg-[#F4F4F2] px-3 py-1 text-xs text-[#45484D]">+{extra}</span>}
         </div>
 
-        {/* View Shop (abhi sirf dikhne ke liye) */}
-        <button
-          type="button"
+        {/* View Shop: opens this supplier's shop page */}
+        <Link
+          href={`/supplier/${slug}`}
           className="group/btn mt-auto flex items-center justify-between rounded-lg bg-[#202124] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#45484D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A7ADB4]"
         >
           <span className="flex items-center gap-2">
@@ -86,7 +87,7 @@ export default function SupplierCard({ supplier, index = 0 }) {
           <Icon className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1">
             <path d="M5 12h14M13 6l6 6-6 6" />
           </Icon>
-        </button>
+        </Link>
       </div>
     </article>
   );
