@@ -1,0 +1,225 @@
+"use client";
+
+import { useState } from "react";
+import { Search, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
+import DisputeResolveModal from "./Disputeresolvemodal.js";
+import DisputeRejectModal from "./Disputerejectmodal.js";
+
+const initialDisputes = [
+  { id: "TKT-301", orderId: "ORD-1005", customer: "Ahmed Raza", supplier: "Brick House", type: "Quality issue", date: "2026-10-10", status: "Resolved" },
+  { id: "TKT-302", orderId: "ORD-1002", customer: "Sana Malik", supplier: "Brick House", type: "COD refused", date: "2026-10-17", status: "Open" },
+  { id: "TKT-303", orderId: "ORD-1003", customer: "Bilal Khan", supplier: "Sheikh Traders", type: "Paid but not delivered", date: "2026-10-18", status: "Under Review" },
+  { id: "TKT-304", orderId: "ORD-1007", customer: "Usman Ali", supplier: "Tile City", type: "Wrong item sent", date: "2026-10-19", status: "Waiting for Response" },
+];
+
+const headings = ["Dispute ID", "Order ID", "Customer", "Supplier", "Dispute Type", "Date", "Status", "Actions"];
+const statusOptions = ["All", "Open", "Under Review", "Waiting for Response", "Resolved", "Rejected"];
+const perPage = 8; // ek page par kitne rows
+
+// Status ke hisab se badge ka rang
+const badgeColors = {
+  Open: "bg-orange-50 text-orange-600 ring-orange-200",
+  "Under Review": "bg-orange-50 text-orange-600 ring-orange-200",
+  "Waiting for Response": "bg-blue-50 text-blue-600 ring-blue-200",
+  Resolved: "bg-green-50 text-green-700 ring-green-200",
+  Rejected: "bg-red-50 text-red-600 ring-red-200",
+};
+
+export default function DisputesSupport() {
+  const [disputes, setDisputes] = useState(initialDisputes);
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("All");
+  const [page, setPage] = useState(1);
+  const [resolving, setResolving] = useState(null); // Resolve modal wali dispute
+  const [rejecting, setRejecting] = useState(null); // Reject modal wali dispute
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+    setPage(1);
+  };
+
+  // Reject: seedha status badal do
+//   const handleReject = (id) => {
+//     setDisputes(disputes.map((d) => (d.id === id ? { ...d, status: "Rejected" } : d)));
+//   };
+
+// Reject modal: confirm par status Rejected karo aur reason save karo
+const handleReject = (reason) => {
+  setDisputes(
+    disputes.map((d) => (d.id === rejecting.id ? { ...d, status: "Rejected", reason } : d))
+  );
+  setRejecting(null);
+};
+
+
+  // Resolve modal: confirm par status Resolved karo aur outcome + note save karo
+  const handleResolve = (outcome, note) => {
+    setDisputes(
+      disputes.map((d) => (d.id === resolving.id ? { ...d, status: "Resolved", outcome, note } : d))
+    );
+    setResolving(null);
+  };
+
+  // 1) Search aur dropdown dono par poore utre hue disputes chuno
+  const visible = disputes.reduce((all, d) => {
+    const matchSearch = `${d.id} ${d.orderId} ${d.customer} ${d.supplier} ${d.type}`
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchStatus = status === "All" || d.status === status;
+    return matchSearch && matchStatus ? [...all, d] : all;
+  }, []);
+
+  // 2) Pages
+  const totalPages = Math.max(1, Math.ceil(visible.length / perPage));
+  const current = Math.min(page, totalPages);
+
+  // 3) Sirf is page ke rows
+  const rows = visible.slice((current - 1) * perPage, current * perPage);
+
+  const btn =
+    "rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-1.5 text-xs text-[color:var(--primary-text)] hover:bg-[var(--off-white-background)]";
+
+  return (
+    <section className="p-4 sm:p-6 lg:p-8">
+      {/* Heading */}
+      <h1 className="text-3xl leading-tight text-[color:var(--primary-text)] sm:text-4xl">
+        Disputes &amp; Support
+      </h1>
+
+      {/* Card */}
+      <div className="mt-5 rounded-xl border border-[color:var(--border-color)] bg-[var(--white-cards)] shadow-sm">
+        {/* Search + dropdown */}
+        <div className="flex flex-col gap-3 p-3 sm:flex-row">
+          <div className="flex flex-1 items-center gap-2 rounded-md border border-[color:var(--border-color)] px-3 py-2">
+            <Search size={16} className="shrink-0 text-[color:var(--secondary-text)]" />
+            <input
+              type="text"
+              value={search}
+              onChange={handleSearch}
+              placeholder="Search..."
+              className="w-full bg-transparent text-sm text-[color:var(--primary-text)] outline-none"
+            />
+          </div>
+          <select
+            value={status}
+            onChange={handleStatus}
+            className="rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)] outline-none sm:w-52"
+          >
+            {statusOptions.map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[1000px] text-left text-sm">
+            <thead className="bg-[var(--off-white-background)] text-xs uppercase text-[color:var(--secondary-text)]">
+              <tr>
+                {headings.map((h) => (
+                  <th key={h} className="px-4 py-3 font-medium">
+                    <span className="inline-flex items-center gap-1">
+                      {h}
+                      {h === "Date" && <ArrowUpDown size={12} />}
+                    </span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+              {rows.map((d) => (
+                <tr key={d.id} className="border-t border-[color:var(--border-color)]">
+                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{d.id}</td>
+                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{d.orderId}</td>
+                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{d.customer}</td>
+                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{d.supplier}</td>
+                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{d.type}</td>
+                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{d.date}</td>
+                  <td className="px-4 py-3">
+                    <span className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs ring-1 ${badgeColors[d.status]}`}>
+                      {d.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex gap-2">
+                      <button type="button" onClick={() => console.log("View", d.id)} className={btn}>View</button>
+
+                      {/* Resolve / Reject sirf unn disputes par jo abhi band nahi hue */}
+                      {d.status !== "Resolved" && d.status !== "Rejected" && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => setResolving(d)}
+                            className="rounded-md bg-[var(--primary-yellow)] px-3 py-1.5 text-xs text-[color:var(--charcoal-black)] hover:bg-[var(--hover-yellow)]"
+                          >
+                            Resolve
+                          </button>
+                          {/* <button type="button" onClick={() => handleReject(d.id)} className={btn}> */}
+                          <button type="button" onClick={() => setRejecting(d)} className={btn}>
+                            Reject
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Footer: records + pages */}
+        <div className="flex items-center justify-between border-t border-[color:var(--border-color)] px-4 py-3 text-xs text-[color:var(--secondary-text)]">
+          <span>{visible.length} records</span>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              aria-label="Previous page"
+              disabled={current === 1}
+              onClick={() => setPage(current - 1)}
+              className="disabled:opacity-30"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <span>Page {current} / {totalPages}</span>
+            <button
+              type="button"
+              aria-label="Next page"
+              disabled={current === totalPages}
+              onClick={() => setPage(current + 1)}
+              className="disabled:opacity-30"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Resolve modal */}
+      {resolving && (
+        <DisputeResolveModal
+          key={resolving.id}
+          dispute={resolving}
+          onClose={() => setResolving(null)}
+          onConfirm={handleResolve}
+        />
+      )}
+{/* Reject modal */}
+{rejecting && (
+  <DisputeRejectModal
+    key={rejecting.id}
+    dispute={rejecting}
+    onClose={() => setRejecting(null)}
+    onConfirm={handleReject}
+  />
+)}
+
+    </section>
+  );
+}

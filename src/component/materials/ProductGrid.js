@@ -1,6 +1,6 @@
 "use client";
 
-import products from "../../assests/data/products";
+import products from "../../assets/data/products";
 import ProductCard from "./ProductCard";
 
 // view = "list" or "grid". Every product in the dataset is shown with .map()
