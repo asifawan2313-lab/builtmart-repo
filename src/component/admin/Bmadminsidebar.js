@@ -30,7 +30,9 @@ const BM_ADMIN_MENU = [
   { id: 4, label: "Material Management", href: "/admin/materials", icon: Package },
   { id: 5, label: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { id: 6, label: "Deliveries & Riders", href: "/admin/deliveries", icon: Truck },
-  { id: 7, label: "Top-Up Requests", href: "/admin/top-up-requests", icon: Wallet },
+  // { id: 7, label: "Top-Up Requests", href: "/admin/payments", icon: Wallet },
+
+  { id: 7, label: "Top-Up Requests", href: "/admin/payments", icon: Wallet },
   { id: 8, label: "Disputes & Support", href: "/admin/disputes", icon: MessagesSquare },
   { id: 9, label: "Blogs", href: "/admin/blogs", icon: Newspaper },
   { id: 10, label: "Homepage / CMS", href: "/admin/homepage-cms", icon: House },
