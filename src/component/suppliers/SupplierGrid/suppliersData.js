@@ -10,9 +10,6 @@ import shop7 from "../../../assests/images/shop-7.jpg";
 import shop8 from "../../../assests/images/shop-8.jpg";
 
 const shopImages = [shop1, shop2, shop3, shop4, shop5, shop6, shop7, shop8];
-
-
-
 // DEMO DATA: sab naam, ratings, reviews aur verification sirf UI ke liye hain
 export const suppliers = [
   { id: 1, name: "Al-Noor Building Store", initials: "AN", rating: 4.6, reviews: 124, verified: true,
@@ -41,6 +38,15 @@ export const suppliers = [
     tags: ["Cement", "Bricks", "Sand", "Steel", "Tiles"] },
 ].map((s, i) => ({
   ...s,
+  slug: s.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), // used in the shop link, e.g. al-noor-building-store
   location: "Gujranwala, Punjab",
   image: shopImages[i], // har shop ko apni image
+  // Shop information (DEMO DATA, not real contact details)
+  address: "Main GT Road, Gujranwala, Punjab, Pakistan",
+  phone: "+92 300 1234567",
+  hours: "9:00 AM – 9:00 PM",
+  delivery: "Within Gujranwala",
 }));
+
+// Finds one supplier from the link (undefined if there is no such supplier)
+export const getSupplier = (slug) => suppliers.find((s) => s.slug === slug);
