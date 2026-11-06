@@ -31,7 +31,8 @@ import {
   MessagesSquare,
   Wallet,
 } from "lucide-react";
-import BmAdminStatCard from "../../../../component/admin/Bmadminstatcard.js";
+// import BmAdminStatCard from "../../../../component/admin/Bmadminstatcard.js";
+import BmAdminStatCard from "../../../component/admin/Bmadminstatcard.js";
 
 /* ---------------- Datasets ---------------- */
 
