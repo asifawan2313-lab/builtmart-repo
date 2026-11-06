@@ -6,9 +6,18 @@ import { usePathname } from "next/navigation";
 import { HardHat, Menu, X } from "lucide-react";
 
 // 1) Links ka simple data (har link ka apna unique id)
+// const BM_NAV_LINKS = [
+//   { id: 1, label: "Home", href: "/" },
+//   { id: 2, label: "Materials", href: "/materials" },
+//   { id: 3, label: "Suppliers", href: "/suppliers" },
+//   { id: 4, label: "About", href: "/about" },
+//   { id: 5, label: "Contact", href: "/contact-us" },
+// ];
+
 const BM_NAV_LINKS = [
   { id: 1, label: "Home", href: "/" },
-  { id: 2, label: "Materials", href: "/BmMaterials" },
+  { id: 2, label: "Materials", href: "/materials" },
+  { id: 6, label: "Labour", href: "/labour" },
   { id: 3, label: "Suppliers", href: "/suppliers" },
   { id: 4, label: "About", href: "/about" },
   { id: 5, label: "Contact", href: "/contact-us" },

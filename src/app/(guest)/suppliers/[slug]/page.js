@@ -1,179 +1,771 @@
+// // "use client";
+
+// // import { useState } from "react";
+// // import Image from "next/image";
+// // import Link from "next/link";
+// // import { useParams } from "next/navigation";
+// // import { Clock, MapPin, MessageCircle, PackageSearch, Phone, Shield, ShieldCheck, Star, Store, Truck, X } from "lucide-react";
+// // import ProductGrid from "../../../../component/materials/ProductGrid/ProductGrid";
+// // import { getSupplier } from "../supplierData";
+// // import { allProducts } from "../../materials/materialData";
+
+// // const tabs = [
+// //   { id: 1, label: "Overview", href: "#overview" },
+// //   { id: 2, label: "Category", href: "#category" },
+// //   { id: 3, label: "Products", href: "#products" },
+// // ];
+
+// // const SupplierDetailPage = () => {
+// //   const { slug } = useParams(); // link se slug, e.g. modern-builders-mart
+// //   const [action, setAction] = useState(null); // "message" ya "call" = login box khula hai
+// //   const [selected, setSelected] = useState("All Products"); // products ka category chip
+// //   const supplier = getSupplier(slug);
+
+// //   // Supplier na mile to message
+// //   if (!supplier) {
+// //     return (
+// //       <main className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-[#F4F4F2] px-4 text-center">
+// //         <Store className="h-10 w-10 text-[#A7ADB4]" aria-hidden="true" />
+// //         <h1 className="text-2xl font-bold text-[#202124]">Supplier not found</h1>
+// //         <Link
+// //           href="/suppliers"
+// //           className="rounded-lg bg-[#FDC716] px-6 py-2.5 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+// //         >
+// //           Back to Suppliers
+// //         </Link>
+// //       </main>
+// //     );
+// //   }
+
+// //   const { name, initials, location, rating, reviews, description, tags, image, verified, address, hours, delivery } = supplier;
+// //   const BadgeIcon = verified ? ShieldCheck : Shield;
+
+// //   // Is supplier ke products (materialData se, supplier ke naam se)
+// //   const items = allProducts.filter((p) => p.supplier === name);
+// //   const productCategories = [...new Set(items.map((p) => p.category))];
+// //   const categoryNames = productCategories.length ? productCategories : tags;
+// //   const visible = selected === "All Products" ? items : items.filter((p) => p.category === selected);
+
+// //   const infoList = [
+// //     { id: 1, icon: MapPin, label: "Address", value: address },
+// //     { id: 2, icon: Clock, label: "Opening hours", value: hours },
+// //     { id: 3, icon: Truck, label: "Delivery", value: delivery },
+// //   ];
+
+// //   const handleClose = () => setAction(null);
+
+// //   return (
+// //     <main className="bg-[#F4F4F2] pb-14">
+// //       {/* Hero: sirf shop ki image */}
+// //       <section className="relative h-44 overflow-hidden bg-[#202124] sm:h-60">
+// //         <Image src={image} alt={`${name} shop (demo image)`} fill priority sizes="100vw" className="object-cover" />
+// //         <div className="absolute inset-0 bg-[#202124]/60" />
+// //       </section>
+
+// //       <div className="mx-auto max-w-5xl px-4 sm:px-6">
+// //         {/* Header card (hero ke upar thoda overlap) */}
+// //         <section className="relative z-10 -mt-14 rounded-2xl border border-[#E2E4E7] bg-white p-5 shadow-lg sm:p-6">
+// //           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+// //             <div className="flex items-start gap-4">
+// //               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#202124] text-lg font-bold text-white ring-4 ring-[#FDC716] sm:h-20 sm:w-20 sm:text-xl">
+// //                 {initials}
+// //               </span>
+
+// //               <div className="min-w-0">
+// //                 <div className="flex flex-wrap items-center gap-2">
+// //                   <h1 className="text-xl font-extrabold text-[#202124] sm:text-2xl">{name}</h1>
+// //                   <span
+// //                     className={`flex items-center gap-1 rounded-md border border-[#E2E4E7] bg-[#F4F4F2] px-2 py-0.5 text-xs font-medium ${
+// //                       verified ? "text-blue-600" : "text-[#565553]"
+// //                     }`}
+// //                   >
+// //                     <BadgeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+// //                     {verified ? "Verified (demo)" : "Unverified"}
+// //                   </span>
+// //                 </div>
+
+// //                 <p className="mt-1 text-sm text-[#45484D]">{tags.join(", ")}</p>
+// //                 <p className="mt-1 flex items-center gap-1 text-sm text-[#45484D]">
+// //                   <Star className="h-4 w-4 shrink-0 fill-[#FDC716] text-[#FDC716]" aria-hidden="true" />
+// //                   <b className="text-[#202124]">{rating}</b> ({reviews}+ reviews, demo)
+// //                 </p>
+// //                 <p className="mt-1 flex items-start gap-1 text-xs text-[#45484D]">
+// //                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+// //                   {address}
+// //                 </p>
+// //               </div>
+// //             </div>
+
+// //             {/* WhatsApp / Call Now: dono par login maangta hai */}
+// //             <div className="flex flex-col gap-2 sm:flex-row md:w-52 md:flex-col">
+// //               <button
+// //                 type="button"
+// //                 onClick={() => setAction("message")}
+// //                 className="inline-flex h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#202124] bg-white text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F4F4F2]"
+// //               >
+// //                 <MessageCircle size={16} aria-hidden="true" />
+// //                 WhatsApp
+// //               </button>
+// //               <button
+// //                 type="button"
+// //                 onClick={() => setAction("call")}
+// //                 className="inline-flex h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FDC716] text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+// //               >
+// //                 <Phone size={16} aria-hidden="true" />
+// //                 Call Now
+// //               </button>
+// //             </div>
+// //           </div>
+// //         </section>
+
+// //         {/* Tabs (page ke sections par le jate hain) */}
+// //         <nav aria-label="Supplier sections" className="mt-6 flex gap-6 border-b border-[#E2E4E7]">
+// //           {tabs.map(({ id, label, href }) => (
+// //             <a
+// //               key={id}
+// //               href={href}
+// //               className="-mb-px border-b-2 border-transparent px-1 pb-3 text-sm font-semibold text-[#45484D] transition-colors hover:border-[#FDC716] hover:text-[#202124]"
+// //             >
+// //               {label}
+// //             </a>
+// //           ))}
+// //         </nav>
+
+// //         {/* Overview */}
+// //         <section id="overview" className="scroll-mt-28 pt-8">
+// //           <h2 className="border-l-4 border-[#FDC716] pl-3 text-lg font-extrabold text-[#202124]">Overview</h2>
+// //           <p className="mt-4 text-sm font-bold uppercase text-[#202124]">Welcome to {name}</p>
+// //           <p className="mt-2 text-sm leading-6 text-[#45484D]">{description}</p>
+// //           <p className="mt-2 text-xs text-[#45484D]">Sample shop profile shown for demonstration purposes.</p>
+
+// //           <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+// //             {infoList.map(({ id, icon: InfoIcon, label, value }) => (
+// //               <li key={id} className="flex items-start gap-3 rounded-lg border border-[#E2E4E7] bg-white p-3">
+// //                 <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#45484D]" aria-hidden="true" />
+// //                 <div className="min-w-0">
+// //                   <p className="text-xs text-[#A7ADB4]">{label}</p>
+// //                   <p className="break-words text-sm text-[#202124]">{value}</p>
+// //                 </div>
+// //               </li>
+// //             ))}
+// //           </ul>
+// //         </section>
+
+// //         {/* Category */}
+// //         <section id="category" className="scroll-mt-28 pt-8">
+// //           <div className="overflow-hidden rounded-xl border border-[#E2E4E7] bg-white">
+// //             <h2 className="bg-[#FDC716]/25 px-5 py-3 text-base font-bold text-[#202124]">Category</h2>
+// //             <ul className="grid gap-2 p-5 text-sm text-[#45484D] sm:grid-cols-2 lg:grid-cols-3">
+// //               {categoryNames.map((c) => (
+// //                 <li key={c} className="flex items-center gap-2">
+// //                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#FDC716]" aria-hidden="true" />
+// //                   {c}
+// //                 </li>
+// //               ))}
+// //             </ul>
+// //           </div>
+// //         </section>
+
+// //         {/* Products */}
+// //         <section id="products" className="scroll-mt-28 pt-10">
+// //           <h2 className="text-center text-xl font-extrabold text-[#202124] sm:text-2xl">
+// //             Products by <span className="text-[#E5B20F]">{name}</span>
+// //           </h2>
+
+// //           {/* Category chips */}
+// //           <div className="mt-4 flex flex-wrap justify-center gap-2">
+// //             {["All Products", ...productCategories].map((c) => (
+// //               <button
+// //                 key={c}
+// //                 type="button"
+// //                 aria-pressed={selected === c}
+// //                 onClick={() => setSelected(c)}
+// //                 className={`cursor-pointer rounded-full border px-4 py-1.5 text-xs font-semibold transition-colors ${
+// //                   selected === c
+// //                     ? "border-[#FDC716] bg-[#FDC716] text-[#202124]"
+// //                     : "border-[#E2E4E7] bg-white text-[#45484D] hover:bg-[#FDC716]/25"
+// //                 }`}
+// //               >
+// //                 {c}
+// //               </button>
+// //             ))}
+// //           </div>
+
+// //           <div className="mt-6">
+// //             {visible.length === 0 ? (
+// //               <p className="flex items-center gap-2 rounded-xl border border-[#E2E4E7] bg-white p-6 text-sm text-[#45484D]">
+// //                 <PackageSearch size={18} aria-hidden="true" />
+// //                 No sample products listed for this supplier yet.
+// //               </p>
+// //             ) : (
+// //               <ProductGrid items={visible} cols="grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" />
+// //             )}
+// //           </div>
+
+// //           <p className="mt-4 text-center text-xs text-[#45484D]">All supplier information is for demo purposes only.</p>
+// //         </section>
+// //       </div>
+
+// //       {/* Login box (WhatsApp / Call Now dabane par) */}
+// //       {action && (
+// //         <div
+// //           onClick={handleClose}
+// //           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4"
+// //           role="dialog"
+// //           aria-modal="true"
+// //           aria-label="Login required"
+// //         >
+// //           <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
+// //             <button
+// //               type="button"
+// //               aria-label="Close"
+// //               onClick={handleClose}
+// //               className="absolute right-3 top-3 cursor-pointer text-[#45484D] hover:text-[#202124]"
+// //             >
+// //               <X size={18} />
+// //             </button>
+
+// //             <h2 className="text-lg font-extrabold text-[#202124]">Login required</h2>
+// //             <p className="mt-2 text-sm text-[#45484D]">
+// //               Please log in to {action === "message" ? "message" : "call"} {name}.
+// //             </p>
+
+// //             <div className="mt-5 grid grid-cols-2 gap-3">
+// //               <button type="button" className="h-10 cursor-pointer rounded-lg bg-[#FDC716] text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]">
+// //                 Log In
+// //               </button>
+// //               <button type="button" className="h-10 cursor-pointer rounded-lg border border-[#202124] bg-white text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F4F4F2]">
+// //                 Sign Up
+// //               </button>
+// //             </div>
+
+// //             <button type="button" onClick={handleClose} className="mt-3 w-full cursor-pointer text-xs text-[#45484D] hover:text-[#202124]">
+// //               Cancel
+// //             </button>
+// //           </div>
+// //         </div>
+// //       )}
+// //     </main>
+// //   );
+// // };
+
+// // export default SupplierDetailPage;
+
+
+
+
+
+
+// "use client";
+
+// import { useState } from "react";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useParams } from "next/navigation";
+// import { Clock, MapPin, MessageCircle, PackageSearch, Phone, Shield, ShieldCheck, Star, Store, Truck, X } from "lucide-react";
+// import ProductGrid from "../../../../component/materials/ProductGrid/ProductGrid";
+// import { getSupplier } from "../supplierData";
+// import { allProducts } from "../../materials/materialData";
+
+// const tabs = [
+//   { id: 1, label: "Overview", href: "#overview" },
+//   { id: 2, label: "Category", href: "#category" },
+//   { id: 3, label: "Products", href: "#products" },
+// ];
+
+// const SupplierDetailPage = () => {
+//   const { slug } = useParams(); // link se slug, e.g. modern-builders-mart
+//   const [action, setAction] = useState(null); // "message" ya "call" = login box khula hai
+//   const [selected, setSelected] = useState("All Products"); // products ka category chip
+//   const supplier = getSupplier(slug);
+
+//   // Supplier na mile to message
+//   if (!supplier) {
+//     return (
+//       <main className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-[#F4F4F2] px-4 text-center">
+//         <Store className="h-10 w-10 text-[#A7ADB4]" aria-hidden="true" />
+//         <h1 className="text-2xl font-bold text-[#202124]">Supplier not found</h1>
+//         <Link
+//           href="/suppliers"
+//           className="rounded-lg bg-[#FDC716] px-6 py-2.5 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+//         >
+//           Back to Suppliers
+//         </Link>
+//       </main>
+//     );
+//   }
+
+//   const { name, initials, rating, reviews, description, tags, image, verified, address, hours, delivery } = supplier;
+//   const BadgeIcon = verified ? ShieldCheck : Shield;
+
+//   // Is supplier ke products (materialData se, supplier ke naam se)
+//   const items = allProducts.filter((p) => p.supplier === name);
+//   const productCategories = [...new Set(items.map((p) => p.category))];
+//   const categoryNames = productCategories.length ? productCategories : tags;
+//   const visible = selected === "All Products" ? items : items.filter((p) => p.category === selected);
+
+//   const infoList = [
+//     { id: 1, icon: MapPin, label: "Address", value: address },
+//     { id: 2, icon: Clock, label: "Opening hours", value: hours },
+//     { id: 3, icon: Truck, label: "Delivery", value: delivery },
+//   ];
+
+//   const handleClose = () => setAction(null);
+
+//   return (
+//     <main className="bg-[#F4F4F2] pb-14">
+//       {/* Hero: patli band, sirf shop ki image */}
+//       <section className="relative h-24 overflow-hidden bg-[#202124] sm:h-32">
+//         <Image src={image} alt={`${name} shop (demo image)`} fill priority sizes="100vw" className="object-cover" />
+//         <div className="absolute inset-0 bg-[#202124]/65" />
+//       </section>
+
+//       <div className="mx-auto max-w-5xl px-4 sm:px-6">
+//         {/* Header card: halka rang, hero ke neeche thoda overlap */}
+//         <section className="relative z-10 -mt-6 rounded-2xl border border-[#E2E4E7] bg-[#FDF3C8] p-4 shadow-md sm:p-5">
+//           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+//             <div className="flex items-center gap-4">
+//               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-[#202124] bg-[#202124] text-lg font-bold text-white sm:h-20 sm:w-20 sm:text-xl">
+//                 {initials}
+//               </span>
+
+//               <div className="min-w-0">
+//                 <div className="flex flex-wrap items-center gap-2">
+//                   <h1 className="text-lg font-extrabold text-[#202124] sm:text-xl">{name}</h1>
+//                   <span
+//                     className={`flex items-center gap-1 rounded-md bg-white px-2 py-0.5 text-xs font-medium ${
+//                       verified ? "text-blue-600" : "text-[#565553]"
+//                     }`}
+//                   >
+//                     <BadgeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+//                     {verified ? "Verified (demo)" : "Unverified"}
+//                   </span>
+//                 </div>
+
+//                 <p className="mt-1 text-xs text-[#45484D] sm:text-sm">{tags.join(", ")}</p>
+//                 <p className="mt-1 flex items-center gap-1 text-xs text-[#45484D] sm:text-sm">
+//                   <Star className="h-4 w-4 shrink-0 fill-[#FDC716] text-[#FDC716]" aria-hidden="true" />
+//                   <b className="text-[#202124]">{rating}</b> ({reviews}+ reviews, demo)
+//                 </p>
+//                 <p className="mt-1 flex items-start gap-1 text-xs text-[#45484D]">
+//                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+//                   {address}
+//                 </p>
+//               </div>
+//             </div>
+
+//             {/* WhatsApp / Call Now: dono par login maangta hai */}
+//             <div className="flex w-full shrink-0 flex-col gap-2 md:w-56">
+//               <button
+//                 type="button"
+//                 onClick={() => setAction("message")}
+//                 className="inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#202124] bg-white text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F4F4F2]"
+//               >
+//                 <MessageCircle size={16} aria-hidden="true" />
+//                 WhatsApp
+//               </button>
+//               <button
+//                 type="button"
+//                 onClick={() => setAction("call")}
+//                 className="inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FDC716] text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+//               >
+//                 <Phone size={16} aria-hidden="true" />
+//                 Call Now
+//               </button>
+//             </div>
+//           </div>
+//         </section>
+
+//         {/* Tabs (page ke sections par le jate hain) */}
+//         <nav aria-label="Supplier sections" className="mt-6 flex gap-6 border-b border-[#E2E4E7]">
+//           {tabs.map(({ id, label, href }) => (
+//             <a
+//               key={id}
+//               href={href}
+//               className="-mb-px border-b-2 border-transparent px-1 pb-3 text-sm font-semibold text-[#45484D] transition-colors hover:border-[#FDC716] hover:text-[#202124]"
+//             >
+//               {label}
+//             </a>
+//           ))}
+//         </nav>
+
+//         {/* Overview */}
+//         <section id="overview" className="scroll-mt-28 pt-8">
+//           <h2 className="border-l-4 border-[#FDC716] pl-3 text-lg font-extrabold text-[#202124]">Overview</h2>
+//           <p className="mt-4 text-sm font-bold uppercase text-[#202124]">Welcome to {name}</p>
+//           <p className="mt-2 text-sm leading-6 text-[#45484D]">{description}</p>
+//           <p className="mt-2 text-xs text-[#45484D]">Sample shop profile shown for demonstration purposes.</p>
+
+//           <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+//             {infoList.map(({ id, icon: InfoIcon, label, value }) => (
+//               <li key={id} className="flex items-start gap-3 rounded-lg border border-[#E2E4E7] bg-white p-3">
+//                 <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#45484D]" aria-hidden="true" />
+//                 <div className="min-w-0">
+//                   <p className="text-xs text-[#A7ADB4]">{label}</p>
+//                   <p className="break-words text-sm text-[#202124]">{value}</p>
+//                 </div>
+//               </li>
+//             ))}
+//           </ul>
+//         </section>
+
+//         {/* Category */}
+//         <section id="category" className="scroll-mt-28 pt-8">
+//           <div className="overflow-hidden rounded-xl border border-[#E2E4E7] bg-white">
+//             <h2 className="bg-[#FDF3C8] px-5 py-3 text-base font-bold text-[#202124]">Category</h2>
+//             <ul className="grid gap-2 p-5 text-sm text-[#45484D] sm:grid-cols-2 lg:grid-cols-3">
+//               {categoryNames.map((c) => (
+//                 <li key={c} className="flex items-center gap-2">
+//                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#FDC716]" aria-hidden="true" />
+//                   {c}
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         </section>
+
+//         {/* Products */}
+//         <section id="products" className="scroll-mt-28 pt-10">
+//           <h2 className="text-center text-xl font-extrabold text-[#202124] sm:text-2xl">
+//             Products by <span className="text-[#E5B20F]">{name}</span>
+//           </h2>
+
+//           {/* Category chips */}
+//           <div className="mt-4 flex flex-wrap justify-center gap-2">
+//             {["All Products", ...productCategories].map((c) => (
+//               <button
+//                 key={c}
+//                 type="button"
+//                 aria-pressed={selected === c}
+//                 onClick={() => setSelected(c)}
+//                 className={`cursor-pointer rounded-full border px-4 py-1.5 text-xs font-semibold transition-colors ${
+//                   selected === c
+//                     ? "border-[#FDC716] bg-[#FDC716] text-[#202124]"
+//                     : "border-[#E2E4E7] bg-white text-[#45484D] hover:bg-[#FDC716]/25"
+//                 }`}
+//               >
+//                 {c}
+//               </button>
+//             ))}
+//           </div>
+
+//           <div className="mt-6">
+//             {visible.length === 0 ? (
+//               <p className="flex items-center gap-2 rounded-xl border border-[#E2E4E7] bg-white p-6 text-sm text-[#45484D]">
+//                 <PackageSearch size={18} aria-hidden="true" />
+//                 No sample products listed for this supplier yet.
+//               </p>
+//             ) : (
+//               <ProductGrid items={visible} cols="grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" />
+//             )}
+//           </div>
+
+//           <p className="mt-4 text-center text-xs text-[#45484D]">All supplier information is for demo purposes only.</p>
+//         </section>
+//       </div>
+
+//       {/* Login box (WhatsApp / Call Now dabane par) */}
+//       {action && (
+//         <div
+//           onClick={handleClose}
+//           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4"
+//           role="dialog"
+//           aria-modal="true"
+//           aria-label="Login required"
+//         >
+//           <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
+//             <button
+//               type="button"
+//               aria-label="Close"
+//               onClick={handleClose}
+//               className="absolute right-3 top-3 cursor-pointer text-[#45484D] hover:text-[#202124]"
+//             >
+//               <X size={18} />
+//             </button>
+
+//             <h2 className="text-lg font-extrabold text-[#202124]">Login required</h2>
+//             <p className="mt-2 text-sm text-[#45484D]">
+//               Please log in to {action === "message" ? "message" : "call"} {name}.
+//             </p>
+
+//             <div className="mt-5 grid grid-cols-2 gap-3">
+//               <button type="button" className="h-10 cursor-pointer rounded-lg bg-[#FDC716] text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]">
+//                 Log In
+//               </button>
+//               <button type="button" className="h-10 cursor-pointer rounded-lg border border-[#202124] bg-white text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F4F4F2]">
+//                 Sign Up
+//               </button>
+//             </div>
+
+//             <button type="button" onClick={handleClose} className="mt-3 w-full cursor-pointer text-xs text-[#45484D] hover:text-[#202124]">
+//               Cancel
+//             </button>
+//           </div>
+//         </div>
+//       )}
+//     </main>
+//   );
+// };
+
+// export default SupplierDetailPage;
+
+
+
+
+
+
+
+
+
 "use client";
 
-import { use } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { BadgeCheck, ChevronRight, Clock, Home, MapPin, Phone, Star, Truck } from "lucide-react";
-
-//import { getSupplier } from "../../../../component/supplier/SupplierGrid/SupplierData";
+import { useParams } from "next/navigation";
+import { Clock, MapPin, MessageCircle, PackageSearch, Phone, Shield, ShieldCheck, Star, Store, Truck, X } from "lucide-react";
+import ProductGrid from "../../../../component/materials/ProductGrid/ProductGrid";
 import { getSupplier } from "../supplierData";
-/* ============================================================
-   1. HERO
-   ============================================================ */
+import { allProducts } from "../../materials/materialData";
 
-const SupplierShopHero = ({ supplier }) => {
-  const { name, initials, image, verified, location, rating, reviews, phone, hours } = supplier;
+const tabs = [
+  { id: 1, label: "Overview", href: "#overview" },
+  { id: 2, label: "Category", href: "#category" },
+  { id: 3, label: "Products", href: "#products" },
+];
 
-  // Simple handler (baad mein asal action jodein)
-  const handleContact = () => console.log("Contact Supplier clicked");
-
-  return (
-    <section className="relative min-h-80 overflow-hidden bg-[#202124] sm:min-h-96 lg:min-h-[26rem]">
-      {/* Is supplier ki apni shop image */}
-      <Image src={image} alt={`${name} shop (demo image)`} fill priority sizes="100vw" className="object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/60 to-[#202124]/20" />
-
-      <div className="relative flex min-h-80 flex-col gap-5 px-4 py-8 sm:min-h-96 sm:px-6 md:flex-row md:justify-between md:gap-10 lg:min-h-[26rem] lg:px-10">
-        {/* Left: logo + text (vertically beech mein) */}
-        <div className="flex min-w-0 items-start gap-4 text-white sm:gap-5 md:self-center">
-          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-4 border-white bg-[#FDC716] text-xl font-bold text-[#202124] shadow-lg sm:h-20 sm:w-20 sm:text-2xl">
-            {initials}
-          </span>
-
-          <div className="min-w-0">
-            {/* Row 1: Verified */}
-            {verified && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium text-blue-600">
-                <BadgeCheck size={14} /> Verified
-              </span>
-            )}
-
-            {/* Row 2: name */}
-            <h1 className="mt-2 font-[family-name:var(--font-baloo)] text-2xl font-bold sm:text-3xl lg:text-4xl">{name}</h1>
-
-            {/* Row 3: rating + location */}
-            <div className="mt-1.5 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
-              <p className="flex items-center gap-1.5">
-                <Star size={16} className="fill-[#FDC716] text-[#FDC716]" />
-                <b>{rating}</b> ({reviews}+ reviews)
-              </p>
-              <p className="flex items-center gap-1.5 text-white/85">
-                <MapPin size={14} className="shrink-0" /> {location}
-              </p>
-            </div>
-
-            {/* Row 4: phone + hours */}
-            <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-white/85 sm:text-sm">
-              <p className="flex items-center gap-1.5 whitespace-nowrap">
-                <Phone size={14} className="shrink-0" /> {phone}
-              </p>
-              <p className="flex items-center gap-1.5 whitespace-nowrap">
-                <Clock size={14} className="shrink-0" /> {hours}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Right: Contact Supplier (neechay-right) */}
-        <button
-          type="button"
-          onClick={handleContact}
-          className="flex shrink-0 items-center justify-center gap-2 self-start rounded-lg bg-[#FDC716] px-5 py-2.5 text-sm font-semibold text-[#202124] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#E5B20F] hover:shadow-lg active:scale-95 md:self-end"
-        >
-          <Phone size={16} /> Contact Supplier
-        </button>
-      </div>
-    </section>
-  );
-};
-
-/* ============================================================
-   2. BREADCRUMB
-   ============================================================ */
-
-const SupplierShopBreadcrumb = ({ name }) => {
-  return (
-    <nav aria-label="Breadcrumb" className="border-b border-[#E2E4E7] bg-white">
-      <ol className="flex flex-wrap items-center gap-2 px-4 py-3 text-xs text-[#565553] sm:px-6 sm:text-sm lg:px-10">
-        {/* Home (sirf icon) */}
-        <li>
-          <Link href="/" aria-label="Home" className="flex items-center text-[#202124] transition-colors hover:text-[#E5B20F]">
-            <Home size={16} />
-          </Link>
-        </li>
-
-        <ChevronRight size={14} className="shrink-0 text-[#A7ADB4]" aria-hidden="true" />
-
-        <li>
-          <Link href="/suppliers" className="transition-colors hover:text-[#E5B20F]">
-            Suppliers
-          </Link>
-        </li>
-
-        <ChevronRight size={14} className="shrink-0 text-[#A7ADB4]" aria-hidden="true" />
-
-        {/* Maujooda shop (link nahi) */}
-        <li aria-current="page" className="min-w-0 truncate text-[#202124]">
-          {name}
-        </li>
-      </ol>
-    </nav>
-  );
-};
-
-/* ============================================================
-   3. SHOP DETAILS (data file ki maujooda fields)
-   ============================================================ */
-
-const SupplierShopDetails = ({ supplier }) => {
-  const { description, address, phone, hours, delivery, tags } = supplier;
-
-  // Chhoti details: [icon, label, value]
-  const details = [
-    [MapPin, "Address", address],
-    [Phone, "Phone", phone],
-    [Clock, "Opening Hours", hours],
-    [Truck, "Delivery", delivery],
-  ];
-
-  return (
-    <section className="px-4 py-8 sm:px-6 lg:px-10">
-      <h2 className="font-[family-name:var(--font-baloo)] text-2xl font-bold text-[#202124]">About this Shop</h2>
-      <p className="mt-2 max-w-3xl text-sm text-[#565553] sm:text-base">{description}</p>
-
-      {/* Details cards */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {details.map(([DetailIcon, label, value]) => (
-          <div key={label} className="rounded-xl border border-[#E2E4E7] bg-white p-4 shadow-sm">
-            <DetailIcon size={20} className="text-[#E5B20F]" />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-[#45484D]">{label}</p>
-            <p className="mt-1 text-sm text-[#202124]">{value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Categories */}
-      <h3 className="mt-8 text-lg font-semibold text-[#202124]">Categories</h3>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {tags.map((t) => (
-          <span key={t} className="rounded-full border border-[#E2E4E7] bg-white px-4 py-1.5 text-sm text-[#45484D]">
-            {t}
-          </span>
-        ))}
-      </div>
-
-      <p className="mt-6 text-xs text-[#565553]">All shop information is for demo purposes only.</p>
-    </section>
-  );
-};
-
-/* ============================================================
-   PAGE
-   ============================================================ */
-
-export default function Page({ params }) {
-  const { slug } = use(params); // link ka slug, e.g. al-noor-building-store
+const SupplierDetailPage = () => {
+  const { slug } = useParams(); // link se slug, e.g. modern-builders-mart
+  const [action, setAction] = useState(null); // "message" ya "call" = login box khula hai
+  const [selected, setSelected] = useState("All Products"); // products ka category chip
   const supplier = getSupplier(slug);
 
-  // Aisa koi supplier na ho to 404 page
-  if (!supplier) notFound();
+  // Supplier na mile to message
+  if (!supplier) {
+    return (
+      <main className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-[#F4F4F2] px-4 text-center">
+        <Store className="h-10 w-10 text-[#A7ADB4]" aria-hidden="true" />
+        <h1 className="text-2xl font-bold text-[#202124]">Supplier not found</h1>
+        <Link
+          href="/suppliers"
+          className="rounded-lg bg-[#FDC716] px-6 py-2.5 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+        >
+          Back to Suppliers
+        </Link>
+      </main>
+    );
+  }
+
+  const { name, initials, rating, reviews, description, tags, image, verified, address, hours, delivery } = supplier;
+  const BadgeIcon = verified ? ShieldCheck : Shield;
+
+  // Is supplier ke products (materialData se, supplier ke naam se)
+  const items = allProducts.filter((p) => p.supplier === name);
+  const productCategories = [...new Set(items.map((p) => p.category))];
+  const categoryNames = productCategories.length ? productCategories : tags;
+  const visible = selected === "All Products" ? items : items.filter((p) => p.category === selected);
+
+  const infoList = [
+    { id: 1, icon: MapPin, label: "Address", value: address },
+    { id: 2, icon: Clock, label: "Opening hours", value: hours },
+    { id: 3, icon: Truck, label: "Delivery", value: delivery },
+  ];
+
+  const handleClose = () => setAction(null);
 
   return (
-    <main className="min-h-screen bg-[#F4F4F2]">
-      <SupplierShopHero supplier={supplier} />
-      <SupplierShopBreadcrumb name={supplier.name} />
-      <SupplierShopDetails supplier={supplier} />
+    <main className="bg-[#F4F4F2] pb-14">
+      {/* Hero: bara banner, supplier ki apni shop image */}
+      <section className="relative h-56 overflow-hidden bg-[#202124] sm:h-72 lg:h-96">
+        <Image src={image} alt={`${name} shop (demo image)`} fill priority sizes="100vw" className="object-cover" />
+        <div className="absolute inset-0 bg-[#202124]/40" />
+      </section>
+
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        {/* Header card: white, hero ke neeche thoda overlap */}
+        <section className="relative z-10 -mt-10 rounded-2xl border border-[#FDE9A0] bg-[#FFFBEA] p-4 shadow-md sm:p-5">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-4">
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-[#FDC716] bg-[#202124] text-lg font-bold text-white sm:h-20 sm:w-20 sm:text-xl">
+                {initials}
+              </span>
+
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h1 className="text-lg font-extrabold text-[#202124] sm:text-xl">{name}</h1>
+                  <span
+                    className={`flex items-center gap-1 rounded-md bg-white px-2 py-0.5 text-xs font-medium ${
+                      verified ? "text-blue-600" : "text-[#565553]"
+                    }`}
+                  >
+                    <BadgeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                    {verified ? "Verified (demo)" : "Unverified"}
+                  </span>
+                </div>
+
+                <p className="mt-1 text-xs text-[#45484D] sm:text-sm">{tags.join(", ")}</p>
+                <p className="mt-1 flex items-center gap-1 text-xs text-[#45484D] sm:text-sm">
+                  <Star className="h-4 w-4 shrink-0 fill-[#FDC716] text-[#FDC716]" aria-hidden="true" />
+                  <b className="text-[#202124]">{rating}</b> ({reviews}+ reviews, demo)
+                </p>
+                <p className="mt-1 flex items-start gap-1 text-xs text-[#45484D]">
+                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  {address}
+                </p>
+              </div>
+            </div>
+
+            {/* WhatsApp / Call Now: dono par login maangta hai */}
+            <div className="flex w-full shrink-0 flex-col gap-2 md:w-56">
+              <button
+                type="button"
+                onClick={() => setAction("message")}
+                className="inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#202124] bg-white text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F4F4F2]"
+              >
+                <MessageCircle size={16} aria-hidden="true" />
+                WhatsApp
+              </button>
+              <button
+                type="button"
+                onClick={() => setAction("call")}
+                className="inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FDC716] text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+              >
+                <Phone size={16} aria-hidden="true" />
+                Call Now
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Tabs (page ke sections par le jate hain) */}
+        <nav aria-label="Supplier sections" className="mt-6 flex gap-6 border-b border-[#E2E4E7]">
+          {tabs.map(({ id, label, href }) => (
+            <a
+              key={id}
+              href={href}
+              className="-mb-px border-b-2 border-transparent px-1 pb-3 text-sm font-semibold text-[#45484D] transition-colors hover:border-[#FDC716] hover:text-[#202124]"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Overview */}
+        <section id="overview" className="scroll-mt-28 pt-8">
+          <h2 className="border-l-4 border-[#FDC716] pl-3 text-lg font-extrabold text-[#202124]">Overview</h2>
+          <p className="mt-4 text-sm font-bold uppercase text-[#202124]">Welcome to {name}</p>
+          <p className="mt-2 text-sm leading-6 text-[#45484D]">{description}</p>
+          <p className="mt-2 text-xs text-[#45484D]">Sample shop profile shown for demonstration purposes.</p>
+
+          <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+            {infoList.map(({ id, icon: InfoIcon, label, value }) => (
+              <li key={id} className="flex items-start gap-3 rounded-lg border border-[#E2E4E7] bg-white p-3">
+                <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#45484D]" aria-hidden="true" />
+                <div className="min-w-0">
+                  <p className="text-xs text-[#A7ADB4]">{label}</p>
+                  <p className="break-words text-sm text-[#202124]">{value}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Category */}
+        <section id="category" className="scroll-mt-28 pt-8">
+          <div className="overflow-hidden rounded-xl border border-[#E2E4E7] bg-white">
+            <h2 className="bg-[#FDF3C8] px-5 py-3 text-base font-bold text-[#202124]">Category</h2>
+            <ul className="grid gap-2 p-5 text-sm text-[#45484D] sm:grid-cols-2 lg:grid-cols-3">
+              {categoryNames.map((c) => (
+                <li key={c} className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#FDC716]" aria-hidden="true" />
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Products */}
+        <section id="products" className="scroll-mt-28 pt-10">
+          <h2 className="text-center text-xl font-extrabold text-[#202124] sm:text-2xl">
+            Products by <span className="text-[#E5B20F]">{name}</span>
+          </h2>
+
+          {/* Category chips */}
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            {["All Products", ...productCategories].map((c) => (
+              <button
+                key={c}
+                type="button"
+                aria-pressed={selected === c}
+                onClick={() => setSelected(c)}
+                className={`cursor-pointer rounded-full border px-4 py-1.5 text-xs font-semibold transition-colors ${
+                  selected === c
+                    ? "border-[#FDC716] bg-[#FDC716] text-[#202124]"
+                    : "border-[#E2E4E7] bg-white text-[#45484D] hover:bg-[#FDC716]/25"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6">
+            {visible.length === 0 ? (
+              <p className="flex items-center gap-2 rounded-xl border border-[#E2E4E7] bg-white p-6 text-sm text-[#45484D]">
+                <PackageSearch size={18} aria-hidden="true" />
+                No sample products listed for this supplier yet.
+              </p>
+            ) : (
+              <ProductGrid items={visible} cols="grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" />
+            )}
+          </div>
+
+          <p className="mt-4 text-center text-xs text-[#45484D]">All supplier information is for demo purposes only.</p>
+        </section>
+      </div>
+
+      {/* Login box (WhatsApp / Call Now dabane par) */}
+      {action && (
+        <div
+          onClick={handleClose}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Login required"
+        >
+          <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={handleClose}
+              className="absolute right-3 top-3 cursor-pointer text-[#45484D] hover:text-[#202124]"
+            >
+              <X size={18} />
+            </button>
+
+            <h2 className="text-lg font-extrabold text-[#202124]">Login required</h2>
+            <p className="mt-2 text-sm text-[#45484D]">
+              Please log in to {action === "message" ? "message" : "call"} {name}.
+            </p>
+
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <button type="button" className="h-10 cursor-pointer rounded-lg bg-[#FDC716] text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]">
+                Log In
+              </button>
+              <button type="button" className="h-10 cursor-pointer rounded-lg border border-[#202124] bg-white text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F4F4F2]">
+                Sign Up
+              </button>
+            </div>
+
+            <button type="button" onClick={handleClose} className="mt-3 w-full cursor-pointer text-xs text-[#45484D] hover:text-[#202124]">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
-}
+};
+
+export default SupplierDetailPage;
