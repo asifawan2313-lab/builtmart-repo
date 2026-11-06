@@ -5,21 +5,21 @@ import Image from "next/image";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 
-import blackpipe from "../../../assets/image/guest/card/blackpipe.jpg"
-import briks from "../../../assets/image/guest/card/briks.jpg"
+import blackpipe from "../../../assets/images/guest/card/blackpipe.jpg"
+import briks from "../../../assets/images/guest/card/briks.jpg"
 
-import ceiling from "../../../assets/image/guest/card/ceiling.jpg"
-import copperwire from "../../../assets/image/guest/card/copperwire.jpg"
-import doorhings from "../../../assets/image/guest/card/doorhings.jpg"
-import doorsWindows from "../../../assets/image/guest/card/doorsWindows.jpg"
-import grills from "../../../assets/image/guest/card/grills.jpg"
-import multiwire from "../../../assets/image/guest/card/multiwire.jpg"
-import paint from "../../../assets/image/guest/card/paint.jpg"
-import sand from "../../../assets/image/guest/card/sand.jpg"
-import secwindow from "../../../assets/image/guest/card/secwindow.jpg"
-import steelSaria from "../../../assets/image/guest/card/steelSaria.jpg"
-import tiles from "../../../assets/image/guest/card/tiles.jpg"
-import window from "../../../assets/image/guest/card/window.jpg"
+import ceiling from "../../../assets/images/guest/card/ceiling.jpg"
+import copperwire from "../../../assets/images/guest/card/copperwire.jpg"
+import doorhings from "../../../assets/images/guest/card/doorhings.jpg"
+import doorsWindows from "../../../assets/images/guest/card/doorsWindows.jpg"
+import grills from "../../../assets/images/guest/card/grills.jpg"
+import multiwire from "../../../assets/images/guest/card/multiwire.jpg"
+import paint from "../../../assets/images/guest/card/paint.jpg"
+import sand from "../../../assets/images/guest/card/sand.jpg"
+import secwindow from "../../../assets/images/guest/card/secwindow.jpg"
+import steelSaria from "../../../assets/images/guest/card/steelSaria.jpg"
+import tiles from "../../../assets/images/guest/card/tiles.jpg"
+import window from "../../../assets/images/guest/card/window.jpg"
 
 // 1) Categories ka simple data (har item ka unique id)
 //    Nayi category add karni ho to bas aik aur { ... } likh dein, card khud ban jayega.
