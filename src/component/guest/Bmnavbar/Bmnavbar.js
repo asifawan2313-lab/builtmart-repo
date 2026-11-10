@@ -21,6 +21,7 @@ const BM_NAV_LINKS = [
   { id: 3, label: "Suppliers", href: "/suppliers" },
   { id: 4, label: "About", href: "/about" },
   { id: 5, label: "Contact", href: "/contact-us" },
+  { id: 7, label: "Blogs", href: "/blogs" },
 ];
 
 export default function BmNavbar() {
