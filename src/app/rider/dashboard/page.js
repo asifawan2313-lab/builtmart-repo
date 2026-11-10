@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link.js";
 
 import { useRouter } from "next/navigation";
 import { ArrowUpRight, CircleCheck, ClipboardList, Route, Truck, Wallet } from "lucide-react";

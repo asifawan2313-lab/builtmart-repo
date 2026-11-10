@@ -54,9 +54,41 @@
 
 
 
+// "use client";
+
+// import "../globals.css";
+// import { usePathname } from "next/navigation";
+// import BmAdminSidebar from "../../component/admin/Bmadminsidebar.js";
+
+// const AdminLayout = ({ children }) => {
+//   const pathname = usePathname();
+
+//   // Login page par sidebar nahi dikhani
+//   const isLogin = pathname.startsWith("/admin/log-in");
+
+//   return (
+//     <html lang="en">
+//       <body>
+//         <title>BuildMart Admin</title>
+//         {isLogin ? (
+//           children
+//         ) : (
+//           <div className="flex min-h-screen bg-[var(--off-white-background)]">
+//             <BmAdminSidebar />
+//             <main className="min-w-0 flex-1">{children}</main>
+//           </div>
+//         )}
+//       </body>
+//     </html>
+//   );
+// };
+
+// export default AdminLayout;
+
+
+
 "use client";
 
-import "../globals.css";
 import { usePathname } from "next/navigation";
 import BmAdminSidebar from "../../component/admin/Bmadminsidebar.js";
 
@@ -67,19 +99,18 @@ const AdminLayout = ({ children }) => {
   const isLogin = pathname.startsWith("/admin/log-in");
 
   return (
-    <html lang="en">
-      <body>
-        <title>BuildMart Admin</title>
-        {isLogin ? (
-          children
-        ) : (
-          <div className="flex min-h-screen bg-[var(--off-white-background)]">
-            <BmAdminSidebar />
-            <main className="min-w-0 flex-1">{children}</main>
-          </div>
-        )}
-      </body>
-    </html>
+    <div className="min-h-screen bg-[var(--off-white-background)]">
+      {isLogin ? (
+        children
+      ) : (
+        <div className="flex min-h-screen">
+          <BmAdminSidebar />
+          <main className="min-w-0 flex-1">
+            {children}
+          </main>
+        </div>
+      )}
+    </div>
   );
 };
 
