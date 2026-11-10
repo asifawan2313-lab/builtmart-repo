@@ -1,3 +1,4 @@
+
 import BmLabourSidebar from "../../component/labour/BmLabourSidebar/BmLabourSidebar";
 
 const LabourPanelLayout = ({ children }) => (
