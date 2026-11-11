@@ -165,10 +165,10 @@ import { HardHat, Eye, EyeOff, LogIn } from "lucide-react";
 
 // 1) Demo accounts ka simple data (har item ka unique id)
 //    Yeh sirf demo ke liye hai, asli project mein yeh box hata dein.
-const BM_DEMO_ACCOUNTS = [
-  { id: 1, label: "Demo:", login: "admin@buildmart.pk / admin123" },
-  { id: 2, label: "Sub-admin:", login: "maria@buildmart.pk / maria123" },
-];
+// const BM_DEMO_ACCOUNTS = [
+//   { id: 1, label: "Demo:", login: "admin@buildmart.pk / admin123" },
+//   { id: 2, label: "Sub-admin:", login: "maria@buildmart.pk / maria123" },
+// ];
 
 const BmAdminLogin = () => {
   // Password nazar aaye ya chhupa rahe
@@ -184,9 +184,9 @@ const BmAdminLogin = () => {
   };
 
   // Google login: asli Google login backend ke saath baad mein jodenge
-  const handleGoogleLogin = () => {
-    console.log("Login with Google clicked");
-  };
+  // const handleGoogleLogin = () => {
+  //   console.log("Login with Google clicked");
+  // };
 
   return (
     <main className="bm-adminLogin-root grid min-h-screen grid-cols-1 lg:grid-cols-2">
@@ -293,8 +293,8 @@ const BmAdminLogin = () => {
           >
             Sign in
           </Link>
-
-          {/* Login with Google */}
+{/* 
+          {/* Login with Google 
           <button
             type="button"
             onClick={handleGoogleLogin}
@@ -302,10 +302,10 @@ const BmAdminLogin = () => {
           >
             <LogIn size={20} />
             Login with Google
-          </button>
+          </button> */}
 
           {/* Demo box */}
-          <div className="mt-6 rounded-lg border border-[color:var(--border-color)] bg-[var(--off-white-background)] p-4 text-sm leading-6 text-[color:var(--secondary-text)] sm:text-base">
+          {/* <div className="mt-6 rounded-lg border border-[color:var(--border-color)] bg-[var(--off-white-background)] p-4 text-sm leading-6 text-[color:var(--secondary-text)] sm:text-base">
             {BM_DEMO_ACCOUNTS.map((item) => (
               <p key={item.id}>
                 {item.label}{" "}
@@ -314,7 +314,7 @@ const BmAdminLogin = () => {
                 </strong>
               </p>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
     </main>
