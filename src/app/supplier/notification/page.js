@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CheckCheck, CheckCircle2, Send } from "lucide-react";
 
-import BmSupplierNotificationList from "../../../../component/supplier/BmSupplierNotificationList/page.js";
+import BmSupplierNotificationList from "../../../component/supplier/Bmnotificationlist.js";
 
 // ========== DATA ==========
 const BM_TABS = ["Send New Notification", "Received Notifications"];
