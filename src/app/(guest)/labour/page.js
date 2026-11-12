@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 // "use client";
 
 // import { useState } from "react";
@@ -5,7 +12,7 @@
 // import Link from "next/link";
 // import { useRouter } from "next/navigation";
 // import { MapPin, Search, Star } from "lucide-react";
-// //import BmLabourSliderGrid from "../../../component/labour/BmLabourSliderGrid/BmLabourSliderGrid";
+// import LabourGrid from "../../../component/labour/LabourGrid/LabourGrid";
 // import { labourCategories, labourAreas, labourProviders } from "./labourData";
 
 // /* ============================================================
@@ -156,7 +163,7 @@
 
 //         {filtered.length ? (
 //           // key badalne se search ke baad grid shuru se khulta hai
-//           <BmLabourSliderGrid key={query} items={filtered} Card={CategoryCard} cols={categoryCols} rows="grid-rows-3" label="categories" />
+//           <LabourGrid key={query} items={filtered} Card={CategoryCard} cols={categoryCols} rows="grid-rows-3" label="categories" />
 //         ) : (
 //           <p className="mt-8 text-center text-sm text-[#565553]">No category found. Try a different word.</p>
 //         )}
@@ -218,7 +225,7 @@
 //         Sample providers, ratings and verification shown for demonstration purposes.
 //       </p>
 
-//       <BmLabourSliderGrid items={providers} Card={ProviderCard} cols={providerCols} rows="grid-rows-1" label={label} />
+//       <LabourGrid items={providers} Card={ProviderCard} cols={providerCols} rows="grid-rows-1" label={label} />
 //     </div>
 //   </section>
 // );
@@ -240,9 +247,6 @@
 
 
 
-
-
-
 "use client";
 
 import { useState } from "react";
@@ -257,15 +261,15 @@ import { labourCategories, labourAreas, labourProviders } from "./labourData";
    DEMO DATA (data labourData.js se aata hai)
    ============================================================ */
 
-// Recently Viewed abhi demo hai: pehle 4 providers. Detail page ke baad asli "dekhe hue" aayenge
+// Recently Viewed abhi demo hai: pehle 4 providers. Asli "dekhe hue" baad mein aayenge
 const recentlyViewed = labourProviders.slice(0, 4);
 const trendingProviders = labourProviders.filter((p) => p.trending);
 
-// Har category card listing page par jaye
+// Har category card us category ki listing par jaye
 const categoryLinks = labourCategories.map((c) => ({
   ...c,
   id: c.slug,
-  href: `/labour/listing?category=${c.slug}`,
+  href: `/labour/${c.slug}`,
 }));
 
 // Ek screen par kitne columns: categories 3 (3 rows), providers 4 (1 row)
@@ -291,13 +295,13 @@ const Hero = () => {
   const [query, setQuery] = useState("");
   const [area, setArea] = useState("");
 
-  // Search dabane par filtered listing page khulta hai
+  // Search dabane par filtered listing (/labour/all) khulti hai
   const handleSearch = (e) => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (query.trim()) params.set("q", query.trim());
     if (area) params.set("area", area);
-    router.push(`/labour/listing?${params.toString()}`);
+    router.push(`/labour/all?${params.toString()}`);
   };
 
   return (
@@ -414,7 +418,7 @@ const CategorySection = () => {
    3. RECENTLY VIEWED / TRENDING SKILLED LABOUR
    ============================================================ */
 
-const ProviderCard = ({ id, name, category, experience, areas, verification, rating, image }) => (
+const ProviderCard = ({ id, categorySlug, name, category, experience, areas, verification, rating, image }) => (
   <article className="flex flex-col rounded-xl border border-[#D9E3E9] bg-white p-1.5 text-[#202124] shadow-sm">
     {/* Image ki jagah: image null ho to "No image" dikhta hai */}
     <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[#D9E3E9]">
@@ -448,7 +452,7 @@ const ProviderCard = ({ id, name, category, experience, areas, verification, rat
         </span>
       </div>
 
-      <Link href={`/labour/provider/${id}`} className={`${yellowBtn} mt-2 h-8 rounded-md text-xs`}>
+      <Link href={`/labour/${categorySlug}?provider=${id}`} className={`${yellowBtn} mt-2 h-8 rounded-md text-xs`}>
         View Profile
       </Link>
     </div>
