@@ -1,7 +1,9 @@
 "use client";
+import Link from "next/link";
+
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Forward, MessageSquare, Search, Send } from "lucide-react";
+import { ArrowLeft, AlertTriangle, MessageSquare, Search, Send } from "lucide-react";
 
 /* ============================================================
    DEMO DATA (sab chat aur naam sirf UI ke liye hain)
@@ -181,7 +183,7 @@ const ChatPanel = ({ inquiry, draft, onDraft, onSend, onForward, onBack, hidden 
 
         <span className={`hidden rounded-full px-3 py-1 text-xs font-medium sm:inline ${statusClass[inquiry.status]}`}>{inquiry.status}</span>
 
-        {canForward && (
+        {/* {canForward && (
           <button
             type="button"
             onClick={onForward}
@@ -191,7 +193,16 @@ const ChatPanel = ({ inquiry, draft, onDraft, onSend, onForward, onBack, hidden 
             <Forward size={15} aria-hidden="true" />
             <span className="hidden sm:inline">Forward to Admin</span>
           </button>
-        )}
+        )} */}
+
+
+       <Link
+  href="/customer/disputes/new"
+  className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-[#FDC716] px-3 text-xs font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]"
+>
+  <AlertTriangle size={14} aria-hidden="true" />
+  Raise a Dispute
+</Link>
       </header>
 
       {/* Messages */}

@@ -289,9 +289,9 @@ const notifications = [
   { id: 3, supplier: "Zahid Construction Materials", detail: "Steel rates shared", time: "2 days ago", unread: false },
 ];
 
-const activities = [
-  { id: 1, text: "Added 2 items to cart", time: "2 hours ago", icon: ShoppingCart },
-];
+// const activities = [
+//   { id: 1, text: "Added 2 items to cart", time: "2 hours ago", icon: ShoppingCart },
+// ];
 
 const statusClass = {
   Delivered: "bg-green-50 text-green-700",
@@ -432,7 +432,7 @@ const CustomerDashboardPage = () => (
     </div>
 
     {/* Recent Activity */}
-    <section className={`${panel} mt-4`}>
+    {/* <section className={`${panel} mt-4`}>
       <div className="flex items-center justify-between border-b border-[#E2E4E7]">
         <h2 className="flex items-center gap-3 text-base font-bold text-[#202124] sm:text-lg">
           <span className="flex h-12 w-12 items-center justify-center rounded-br-xl bg-[#FDC716] text-[#202124]">
@@ -459,7 +459,7 @@ const CustomerDashboardPage = () => (
           </li>
         ))}
       </ul>
-    </section>
+    </section> */}
   </main>
 );
 
