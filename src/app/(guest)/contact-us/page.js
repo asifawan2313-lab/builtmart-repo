@@ -1,21 +1,3 @@
-// import ContactHero from "./(section)/contacthero.js";
-// import ContactCards from './(section)/contactcard.js'
-// import ContactForm from './(section)/contactform.js'
-
-// export default function ContactPage() {
-//   return (
-//     <main className="bg-[var(--off-white-background)] pt-10 md:pt-20">
-//       <ContactHero />
-//       <ContactCards/>
-//       <ContactForm/>
-//     </main>
-//   );
-// }
-
-
-
-
-
 "use client";
 
 import { useState } from "react";
@@ -169,7 +151,7 @@ function ContactForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <input type="text" placeholder="Your Name" aria-label="Your Name" required className={fieldClass} />
           <input type="email" placeholder="Email Address" aria-label="Email Address" required className={fieldClass} />
-          <input type="text" placeholder="Company (optional)" aria-label="Company" className={fieldClass} />
+          {/* <input type="text" placeholder="Company (optional)" aria-label="Company" className={fieldClass} /> */}
           <textarea rows="3" placeholder="Write your message here" aria-label="Message" required className={`${fieldClass} resize-none`} />
 
           <button

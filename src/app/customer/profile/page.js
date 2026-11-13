@@ -8,7 +8,7 @@ import { Camera, Lock } from "lucide-react";
    DATA (demo)
    ============================================================ */
 
-const tabs = ["Profile", "Personal Information", "Security", "Notifications"];
+const tabs = ["Profile", "Security", "Notifications"];
 
 const startProfile = {
   name: "Ali Raza",
@@ -17,7 +17,7 @@ const startProfile = {
   address: "G.T. Road, Gujranwala",
 };
 
-// Personal Information form ki fields
+// Profile form ki fields
 const infoFields = [
   { name: "name", label: "Full Name", type: "text", span: "" },
   { name: "phone", label: "Phone Number", type: "tel", span: "" },
@@ -32,11 +32,8 @@ const passwordFields = [
 ];
 
 const toggles = [
-  { name: "inApp", label: "In-app notifications" },
-  { name: "email", label: "Email notifications" },
-   { name: "orders", label: "Order & delivery updates", on: true },
-  { name: "supplier", label: "Supplier replies", on: true },
-  { name: "offers", label: "Offers & promotions", on: false },
+  { name: "inApp", label: "In-app notifications", on: true },
+  { name: "email", label: "Email notifications", on: false },
 ];
 
 const inputClass =
@@ -45,19 +42,32 @@ const yellowBtn =
   "inline-flex h-11 cursor-pointer items-center justify-center rounded-lg bg-[#FDC716] px-6 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F]";
 
 /* ============================================================
-   1. PROFILE TAB
+   1. PROFILE TAB (photo + form)
    ============================================================ */
 
-const ProfileTab = ({ profile }) => {
-  const [photo, setPhoto] = useState("");
+const InfoTab = ({ profile, onSave, photo, onPhoto }) => {
+  const [values, setValues] = useState(profile);
+  const [saved, setSaved] = useState(false);
 
   const handlePhoto = (e) => {
     const file = e.target.files[0];
-    if (file) setPhoto(URL.createObjectURL(file));
+    if (file) onPhoto(URL.createObjectURL(file));
+  };
+
+  const handleChange = (e) => {
+    setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
+    setSaved(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(values);
+    setSaved(true);
   };
 
   return (
-    <section>
+    <form onSubmit={handleSubmit}>
+      {/* Photo */}
       <div className="relative h-28 w-28 overflow-hidden rounded-full bg-[#FDC716]">
         {photo ? (
           <Image src={photo} alt="Profile photo" fill unoptimized sizes="112px" className="object-cover" />
@@ -73,38 +83,7 @@ const ProfileTab = ({ profile }) => {
         <input id="photo" type="file" accept="image/*" onChange={handlePhoto} className="sr-only" />
       </div>
 
-      <h2 className="mt-4 text-xl font-bold text-[#202124]">{profile.name}</h2>
-      <p className="mt-2 text-sm text-[#202124]">
-        {profile.email} · {profile.phone}
-      </p>
-      <p className="mt-1 text-sm text-[#45484D]">{profile.address}</p>
-    </section>
-  );
-};
-
-/* ============================================================
-   2. PERSONAL INFORMATION TAB
-   ============================================================ */
-
-const InfoTab = ({ profile, onSave }) => {
-  const [values, setValues] = useState(profile);
-  const [saved, setSaved] = useState(false);
-
-  const handleChange = (e) => {
-    setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
-    setSaved(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(values);
-    setSaved(true);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-base font-bold text-[#202124]">Personal Information</h2>
-      <div className="mt-4 grid max-w-3xl gap-4 sm:grid-cols-2">
+      <div className="mt-6 grid max-w-3xl gap-4 sm:grid-cols-2">
         {infoFields.map(({ name, label, type, span }) => (
           <div key={name} className={span}>
             <label htmlFor={name} className="mb-1 block text-sm font-medium text-[#202124]">
@@ -125,7 +104,7 @@ const InfoTab = ({ profile, onSave }) => {
 };
 
 /* ============================================================
-   3. SECURITY TAB
+   2. SECURITY TAB
    ============================================================ */
 
 const SecurityTab = () => {
@@ -174,38 +153,8 @@ const SecurityTab = () => {
 };
 
 /* ============================================================
-   4. NOTIFICATIONS TAB
+   3. NOTIFICATIONS TAB
    ============================================================ */
-
-// const NotificationsTab = () => {
-//   const [on, setOn] = useState({ inApp: true, email: false });
-
-//   return (
-//     <section className="max-w-2xl">
-//       <h2 className="text-base font-bold text-[#202124]">Notifications</h2>
-//       <ul className="mt-2">
-//         {toggles.map(({ name, label }) => (
-//           <li key={name} className="flex items-center justify-between gap-4 border-b border-[#E2E4E7] py-4">
-//             <p className="text-sm text-[#202124]">
-//               {label} <span className="ml-1 text-xs text-[#45484D]">{on[name] ? "On" : "Off"}</span>
-//             </p>
-//             <button
-//               type="button"
-//               role="switch"
-//               aria-checked={on[name]}
-//               aria-label={label}
-//               onClick={() => setOn((v) => ({ ...v, [name]: !v[name] }))}
-//               className={`relative h-6 w-11 shrink-0 cursor-pointer rounded-full transition-colors ${on[name] ? "bg-[#FDC716]" : "bg-[#D9E3E9]"}`}
-//             >
-//               <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${on[name] ? "left-[22px]" : "left-0.5"}`} />
-//             </button>
-//           </li>
-//         ))}
-//       </ul>
-//     </section>
-//   );
-// };
-
 
 const NotificationsTab = () => {
   const [on, setOn] = useState(Object.fromEntries(toggles.map(({ name, on }) => [name, on])));
@@ -234,7 +183,6 @@ const NotificationsTab = () => {
   );
 };
 
-
 /* ============================================================
    PAGE
    ============================================================ */
@@ -242,6 +190,7 @@ const NotificationsTab = () => {
 const CustomerProfilePage = () => {
   const [tab, setTab] = useState("Profile");
   const [profile, setProfile] = useState(startProfile);
+  const [photo, setPhoto] = useState("");
 
   return (
     <main className="p-4 sm:p-6 lg:p-8">
@@ -263,8 +212,7 @@ const CustomerProfilePage = () => {
       </div>
 
       <div className="mt-6">
-        {tab === "Profile" && <ProfileTab profile={profile} />}
-        {tab === "Personal Information" && <InfoTab profile={profile} onSave={setProfile} />}
+        {tab === "Profile" && <InfoTab profile={profile} onSave={setProfile} photo={photo} onPhoto={setPhoto} />}
         {tab === "Security" && <SecurityTab />}
         {tab === "Notifications" && <NotificationsTab />}
       </div>
