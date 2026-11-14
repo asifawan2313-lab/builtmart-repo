@@ -34,7 +34,7 @@ const BM_MENU = [
   { id: 4, label: "My Deliveries", href: "/rider/deliveries", icon: Route },
   { id: 5, label: "Delivery History", href: "/rider/history", icon: History },
   // { id: 7, label: "COD Collection", href: "/rider/cod-collection", icon: HandCoins },
-  { id: 6, label: "Wallet / Top Up", href: "/rider/wallet", icon: Wallet },
+  { id: 6, label: "Wallet", href: "/rider/wallet", icon: Wallet },
   { id: 7, label: "My Earnings", href: "/rider/earnings", icon: CircleDollarSign },
   { id: 8, label: "Notifications", href: "/rider/notifications", icon: Bell },
   { id: 9, label: "Messages", href: "/rider/messages", icon: MessageCircle },

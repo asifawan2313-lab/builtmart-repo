@@ -382,7 +382,7 @@ const Slider = ({ items, Card, cols, label }) => {
       >
         {items.map((item) => (
           <div key={item.id} className="snap-start [&>*]:h-full [&>*]:w-full">
-            <Card {...item} />
+            <MaterialCategoryCard {...item} />
           </div>
         ))}
       </div>
@@ -413,7 +413,7 @@ const CategorySection = ({ title, placeholder, items, label, exploreText, explor
           />
         </div>
 
-        <Slider items={items} Card={MaterialCategoryCard} cols={categoryCols} label={label} />
+        <Slider items={items} cols={categoryCols} label={label} />
 
         {/* Explore */}
         <div className="mt-8 text-center">

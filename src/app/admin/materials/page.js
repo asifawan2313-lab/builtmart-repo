@@ -7,7 +7,13 @@
 "use client";
 
 import { useState } from "react";
-import { Image as ImageIcon, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Image as ImageIcon,
+  ArrowUpDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import MaterialDataRow from "../../../component/admin/MaterialDataRow";
 
 /* ============================================================
    1. DATA
@@ -16,18 +22,99 @@ import { Image as ImageIcon, ArrowUpDown, ChevronLeft, ChevronRight } from "luci
 const tabs = ["All", "New", "Reused"];
 
 const newMaterials = [
-  { id: 1, name: "Red Clay Bricks (A-Class)", category: "Category removed", supplier: "Brick House", price: "Rs 16/brick", stock: "In Stock", active: false, complaints: "None" },
-  { id: 2, name: "DG Khan Cement OPC", category: "Cement", supplier: "Sheikh Traders", price: "Rs 1,350/bag", stock: "In Stock", active: false, complaints: "None" },
-  { id: 3, name: "Grade 60 Steel Saria 12mm", category: "Steel / Saria", supplier: "Sheikh Traders", price: "Rs 265/kg", stock: "In Stock", active: false, complaints: "None" },
-  { id: 7, name: "Weather Shield Paint 16L", category: "Paint", supplier: "Sheikh Traders", price: "Rs 14,500/drum", stock: "In Stock", active: false, complaints: "None" },
-  { id: 8, name: "Ravi Sand (Truck)", category: "Sand / Rait", supplier: "Sheikh Traders", price: "Rs 28,000/truck", stock: "In Stock", active: false, complaints: "None" },
-  { id: 9, name: "Floor Tiles 2x2", category: "Tiles", supplier: "Tile City", price: "Rs 95/sq ft", stock: "In Stock", active: true, complaints: "None" },
+  {
+    id: 1,
+    name: "Red Clay Bricks (A-Class)",
+    category: "Category removed",
+    supplier: "Brick House",
+    price: "Rs 16/brick",
+    stock: "In Stock",
+    status : "deactive",
+    complaints: "None",
+  },
+  {
+    id: 2,
+    name: "DG Khan Cement OPC",
+    category: "Cement",
+    supplier: "Sheikh Traders",
+    price: "Rs 1,350/bag",
+    stock: "In Stock",
+    status : "deactive",
+    complaints: "None",
+  },
+  {
+    id: 3,
+    name: "Grade 60 Steel Saria 12mm",
+    category: "Steel / Saria",
+    supplier: "Sheikh Traders",
+    price: "Rs 265/kg",
+    stock: "In Stock",
+    status : "deactive",
+    complaints: "None",
+  },
+  {
+    id: 7,
+    name: "Weather Shield Paint 16L",
+    category: "Paint",
+    supplier: "Sheikh Traders",
+    price: "Rs 14,500/drum",
+    stock: "In Stock",
+    status : "deactive",
+    complaints: "None",
+  },
+  {
+    id: 8,
+    name: "Ravi Sand (Truck)",
+    category: "Sand / Rait",
+    supplier: "Sheikh Traders",
+    price: "Rs 28,000/truck",
+    stock: "In Stock",
+    status : "deactive",
+    complaints: "None",
+  },
+  {
+    id: 9,
+    name: "Floor Tiles 2x2",
+    category: "Tiles",
+    supplier: "Tile City",
+    price: "Rs 95/sq ft",
+    stock: "In Stock",
+    status : "active",
+    complaints: "None",
+  },
 ];
 
 const reusedMaterials = [
-  { id: 4, name: "Used Wooden Doors (set of 4)", category: "Doors & Windows", supplier: "Ahmed Raza", price: "Rs 9,000/door", stock: "Available", active: true, complaints: "None" },
-  { id: 5, name: "Leftover Porcelain Tiles", category: "Tiles", supplier: "Brick House", price: "Rs 110/sq ft", stock: "Available", active: true, complaints: "None" },
-  { id: 6, name: "Salvaged Iron Window Grills", category: "Grills & Iron Railings", supplier: "Bilal Khan", price: "Rs 2,500/piece", stock: "Available", active: true, complaints: "None" },
+  {
+    id: 4,
+    name: "Used Wooden Doors (set of 4)",
+    category: "Doors & Windows",
+    supplier: "Ahmed Raza",
+    price: "Rs 9,000/door",
+    stock: "Available",
+    status : "active",
+    complaints: "None",
+  },
+  {
+    id: 5,
+    name: "Leftover Porcelain Tiles",
+    category: "Tiles",
+    supplier: "Brick House",
+    price: "Rs 110/sq ft",
+    stock: "Available",
+    status : "active",
+    complaints: "None",
+  },
+  {
+    id: 6,
+    name: "Salvaged Iron Window Grills",
+    category: "Grills & Iron Railings",
+    supplier: "Bilal Khan",
+    price: "Rs 2,500/piece",
+    stock: "Available",
+    status : "active",
+    complaints: "None",
+  },
 ];
 
 // Har tab ka apna dataset (seedha lookup, koi filter nahi)
@@ -39,10 +126,19 @@ const materialsByTab = {
 
 // Active / Unavailable ki shuruati halat (id -> true/false)
 const initialActive = Object.fromEntries(
-  materialsByTab.All.map((m) => [m.id, m.active])
+  materialsByTab.All.map((m) => [m.id, m.active]),
 );
 
-const headings = ["Material Name", "Category", "Supplier", "Price", "Availability", "Listing Status", "Complaints / Reports", "Actions"];
+const headings = [
+  "Material Name",
+  "Category",
+  "Supplier",
+  "Price",
+  "Availability",
+  "Listing Status",
+  "Complaints / Reports",
+  "Actions",
+];
 const sortable = ["Material Name", "Price"];
 const perPage = 8; // ek page par kitne rows
 
@@ -126,57 +222,9 @@ const MaterialManagement = () => {
             </thead>
 
             <tbody>
-              {rows.map((m) => (
-                <tr
-                  key={m.id}
-                  className={`border-t border-[color:var(--border-color)] ${
-                    m.category === "Category removed" ? "bg-yellow-50" : ""
-                  }`}
-                >
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-14 shrink-0 items-center justify-center rounded-md bg-[var(--charcoal-black)] text-[color:var(--white-cards)]">
-                        <ImageIcon size={20} />
-                      </span>
-                      <span className="font-medium text-[color:var(--primary-text)]">{m.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{m.category}</td>
-                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{m.supplier}</td>
-                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{m.price}</td>
-                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{m.stock}</td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`bmMaterialStatusBadge rounded-full px-2.5 py-1 text-xs ring-1 ${
-                        activeMap[m.id]
-                          ? "bg-green-50 text-green-700 ring-green-200"
-                          : "bg-gray-100 text-gray-600 ring-gray-200"
-                      }`}
-                    >
-                      {activeMap[m.id] ? "Active" : "Unavailable"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-[color:var(--primary-text)]">{m.complaints}</td>
-                  <td className="px-4 py-3">
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleViewClick(m.name)}
-                        className={`bmMaterialViewButton ${btn}`}
-                      >
-                        View
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleToggleClick(m.id)}
-                        className={`bmMaterialToggleButton ${btn}`}
-                      >
-                        {activeMap[m.id] ? "Deactivate" : "Activate"}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {rows.map((m, key) => {
+                return <MaterialDataRow m={m}  key ={key}/>;
+              })}
             </tbody>
           </table>
         </div>
@@ -194,7 +242,9 @@ const MaterialManagement = () => {
             >
               <ChevronLeft size={16} />
             </button>
-            <span>Page {current} / {totalPages}</span>
+            <span>
+              Page {current} / {totalPages}
+            </span>
             <button
               type="button"
               aria-label="Next page"
