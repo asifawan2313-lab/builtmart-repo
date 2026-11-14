@@ -196,7 +196,7 @@ const RiderWalletPage = () => {
       {/* Heading + button */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-3xl leading-tight text-[color:var(--primary-text)] sm:text-4xl">Wallet / Top Up</h1>
+          <h1 className="text-3xl leading-tight text-[color:var(--primary-text)] sm:text-4xl">Wallet</h1>
           <p className="mt-1 text-sm text-[color:var(--secondary-text)]">Demo wallet — no real money transfer</p>
         </div>
         <button

@@ -32,18 +32,18 @@ const BM_ADMIN_MENU = [
   { id: 4, label: "Material Categories", href: "/admin/categories", icon: Layers },
   { id: 5, label: "Material Management", href: "/admin/materials", icon: Package },
   { id: 6, label: "Orders", href: "/admin/orders", icon: ShoppingCart },
-  { id: 7, label: "Deliveries & Riders", href: "/admin/deliveries", icon: Truck },
+  // { id: 7, label: "Deliveries & Riders", href: "/admin/deliveries", icon: Truck },
   // { id: 7, label: "Top-Up Requests", href: "/admin/payments", icon: Wallet },
 
-  { id: 8, label: "Top-Up Requests", href: "/admin/payments", icon: Wallet },
-  { id: 9, label: "Disputes & Support", href: "/admin/disputes", icon: MessagesSquare },
-  { id: 10, label: "Blogs", href: "/admin/blogs", icon: Newspaper },
-  { id: 11, label: "Homepage / CMS", href: "/admin/homepage-cms", icon: House },
-  { id: 12, label: "Contact Management", href: "/admin/contacts", icon: Mail },
-  { id: 13, label: "Reviews & Ratings", href: "/admin/reviews", icon: Star },
-  { id: 14, label: "Notifications", href: "/admin/notifications", icon: Bell },
-  { id: 15, label: "Reports & Analytics", href: "/admin/reports", icon: ChartColumn },
-  { id: 16, label: "Settings", href: "/admin/settings", icon: Settings },
+  { id: 7, label: "Top-Up Requests", href: "/admin/payments", icon: Wallet },
+  { id: 8, label: "Disputes & Support", href: "/admin/disputes", icon: MessagesSquare },
+  // { id: 10, label: "Blogs", href: "/admin/blogs", icon: Newspaper },
+  { id: 9, label: "CMS", href: "/admin/homepage-cms", icon: House },
+  // { id: 12, label: "Contact Management", href: "/admin/contacts", icon: Mail },
+  { id: 10, label: "Reviews & Ratings", href: "/admin/reviews", icon: Star },
+  { id: 11, label: "Notifications", href: "/admin/notifications", icon: Bell },
+  { id: 12, label: "Reports & Analytics", href: "/admin/reports", icon: ChartColumn },
+  { id: 13, label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export default function BmAdminSidebar({ isOpen = false, onClose = () => {} }) {
