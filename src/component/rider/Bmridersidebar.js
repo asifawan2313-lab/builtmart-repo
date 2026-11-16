@@ -32,14 +32,14 @@ const BM_MENU = [
   // { id: 3, label: "My Bids", href: "/rider/bids", icon: Gavel },
   { id: 3, label: "Fixed Rate Settings", href: "/rider/fixed-rates", icon: SlidersHorizontal },
   { id: 4, label: "My Deliveries", href: "/rider/deliveries", icon: Route },
-  { id: 5, label: "Delivery History", href: "/rider/history", icon: History },
+  // { id: 5, label: "Delivery History", href: "/rider/history", icon: History },
   // { id: 7, label: "COD Collection", href: "/rider/cod-collection", icon: HandCoins },
-  { id: 6, label: "Wallet", href: "/rider/wallet", icon: Wallet },
-  { id: 7, label: "My Earnings", href: "/rider/earnings", icon: CircleDollarSign },
-  { id: 8, label: "Notifications", href: "/rider/notifications", icon: Bell },
-  { id: 9, label: "Messages", href: "/rider/messages", icon: MessageCircle },
-  { id: 10, label: "Disputes", href: "/rider/disputes", icon: TriangleAlert },
-  { id: 11, label: "My Profile", href: "/rider/profile", icon: User },
+  { id: 5, label: "Wallet", href: "/rider/wallet", icon: Wallet },
+  { id: 6, label: "My Earnings", href: "/rider/earnings", icon: CircleDollarSign },
+  { id: 7, label: "Notifications", href: "/rider/notifications", icon: Bell },
+  { id: 8, label: "Messages", href: "/rider/messages", icon: MessageCircle },
+  { id: 9, label: "Disputes", href: "/rider/disputes", icon: TriangleAlert },
+  { id: 10, label: "My Profile", href: "/rider/profile", icon: User },
 
   
 ];
