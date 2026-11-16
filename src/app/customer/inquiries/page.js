@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, AlertTriangle, MessageSquare, Search, Send } from "lucide-react";
-
+import BmInquiries from "../../../component/shared/Inquiries/BmInquiries";
 /* ============================================================
    DEMO DATA (sab chat aur naam sirf UI ke liye hain)
    from: me (customer), supplier, admin, event (beech wali line)
@@ -108,34 +108,19 @@ const InquiryList = ({ items, selectedId, query, onQuery, tab, onTab, onSelect, 
     <ul className="flex-1 overflow-y-auto">
       {items.length === 0 && <li className="px-4 py-10 text-center text-sm text-[#45484D]">No inquiries found.</li>}
 
-      {items.map(({ id, token, supplier, material, date, status, messages }) => {
-        const last = messages.filter((m) => m.from !== "event").at(-1);
+      {items.map(( item ) => {
+        const last = item.messages.filter((m) => m.from !== "event").at(-1);
         return (
-          <li key={id} className="border-b border-[#E2E4E7]">
-            <button
-              type="button"
-              onClick={() => onSelect(id)}
-              className={`flex w-full cursor-pointer items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-[#F4F4F2] ${
-                id === selectedId ? "bg-[#F4F4F2]" : ""
-              }`}
-            >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#202124] text-base font-bold text-[#FDC716]">
-                {supplier[0]}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="flex items-center justify-between gap-2">
-                  <span className="truncate text-sm font-semibold text-[#202124]">{supplier}</span>
-                  <span className="shrink-0 text-[11px] text-[#45484D]">{date}</span>
-                </span>
-                <span className="block truncate text-xs text-[#45484D]">{material}</span>
-                <span className="block truncate text-xs text-[#45484D]">{last.from === "me" ? `You: ${last.text}` : last.text}</span>
-                <span className="mt-1.5 flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-semibold text-[#384452]">{token}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${statusClass[status]}`}>{status}</span>
-                </span>
-              </span>
-            </button>
-          </li>
+          <BmInquiries
+          
+          
+key={item.id}
+         item={item}
+  last={last}
+  onSelect={onSelect}
+  selectedId={selectedId}
+  statusClass={statusClass}
+  />
         );
       })}
     </ul>
