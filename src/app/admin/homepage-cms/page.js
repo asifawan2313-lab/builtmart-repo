@@ -1,3 +1,445 @@
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import Image from "next/image";
+// import Link from "next/link";
+// import {
+//   ChevronLeft,
+//   ChevronRight,
+//   ChevronUp,
+//   ChevronDown,
+//   Eye,
+//   Pencil,
+//   Trash2,
+//   Plus,
+//   X,
+//   Image as ImageIcon,
+//   Search,
+//   MoreVertical,
+//   Upload,
+//   Bold,
+//   Italic,
+//   Underline,
+//   List,
+//   ListOrdered,
+//   Heading1,
+//   Heading2,
+//   Check,
+// } from "lucide-react";
+
+// // Hero images — original CMS file ke imports
+// import exterior from "../../../assets/images/guest/hero/exterior.jpeg";
+// import interior from "../../../assets/images/guest/hero/interior.jpeg";
+// import grey from "../../../assets/images/guest/hero/grey.jpeg";
+
+// /* =========================================================
+//    BM CMS DATA
+// ========================================================= */
+
+// const BM_CMS_TABS = [
+//   "Hero",
+//   "Banners",
+//   "Marquee",
+//   "About",
+//   "Contact",
+//   "Blogs",
+//   "Frequently Asked Questions",
+//   "Platform & Branding",
+// ];
+
+// const BM_CMS_INITIAL_SLIDES = [
+//   {
+//     id: 1,
+//     title: "Build smarter. Compare every material.",
+//     description:
+//       "New and reused construction materials from verified suppliers across Pakistan.",
+//     image: exterior,
+//     buttonText: "Browse Materials",
+//     buttonLink: "/materials",
+//     active: true,
+//   },
+//   {
+//     id: 2,
+//     title: "Materials for your next build",
+//     description: "Cement, steel and bricks from verified local suppliers.",
+//     image: interior,
+//     buttonText: "Explore Suppliers",
+//     buttonLink: "/suppliers",
+//     active: true,
+//   },
+//   {
+//     id: 3,
+//     title: "Give materials a second life",
+//     description:
+//       "Discover reusable doors, tiles and construction materials.",
+//     image: grey,
+//     buttonText: "Find Reused Materials",
+//     buttonLink: "/materials",
+//     active: true,
+//   },
+// ];
+
+// const BM_CMS_INITIAL_BANNERS = [
+//   {
+//     id: 1,
+//     title: "10% off Cement this week",
+//     description: "Limited time offer on all cement brands.",
+//     image: interior,
+//     buttonText: "Shop now",
+//     buttonLink: "/materials",
+//     active: true,
+//   },
+//   {
+//     id: 2,
+//     title: "List your reused materials free",
+//     description: "Sell your leftover materials with no listing fee.",
+//     image: grey,
+//     buttonText: "List now",
+//     buttonLink: "/supplier",
+//     active: true,
+//   },
+// ];
+
+// const BM_CMS_INITIAL_MARQUEE = [
+//   {
+//     id: 1,
+//     text: "New: Verified supplier badges",
+//     active: true,
+//   },
+//   {
+//     id: 2,
+//     text: "Compare construction material prices on BuildMart",
+//     active: true,
+//   },
+// ];
+
+// const BM_CMS_INITIAL_BLOGS = [
+//   {
+//     id: 1,
+//     title: "How to Choose the Right Cement Grade",
+//     author: "BuildMart Team",
+//     slug: "how-to-choose-the-right-cement-grade",
+//     keywords: "cement, grade",
+//     status: "Published",
+//     date: "2026-10-06",
+//     image: "",
+//     imageName: "",
+//     content:
+//       "OPC aur PPC cement ka farq, kis kaam ke liye kaun sa grade behtar hai aur kharidte waqt kin baton ka khayal rakhein.",
+//     readingTime: "5",
+//     featured: true,
+//   },
+//   {
+//     id: 2,
+//     title: "Reusing Materials Saves Money and the Planet",
+//     author: "Maria Saeed",
+//     slug: "reusing-materials-saves-money-and-the-planet",
+//     keywords: "reuse, savings",
+//     status: "Published",
+//     date: "2026-10-13",
+//     image: "",
+//     imageName: "",
+//     content:
+//       "Purane darwaze, khirkiyan aur tiles dobara istemal karne se kharcha bhi kam hota hai aur mahol ko bhi faida hota hai.",
+//     readingTime: "4",
+//     featured: true,
+//   },
+//   {
+//     id: 3,
+//     title: "Steel Prices: Q4 2026 Outlook",
+//     author: "BuildMart Team",
+//     slug: "steel-prices-q4-2026-outlook",
+//     keywords: "steel, prices",
+//     status: "Draft",
+//     date: "2026-10-18",
+//     image: "",
+//     imageName: "",
+//     content:
+//       "Saria ki qeematon ka is quarter ka jaiza aur aane wale mahino ka andaza.",
+//     readingTime: "6",
+//     featured: false,
+//   },
+// ];
+
+// const BM_CMS_INITIAL_FAQS = [
+//   {
+//     id: 1,
+//     question: "What is BuildMart Gujranwala and how does it work?",
+//     answer:
+//       "BuildMart is a marketplace where you can browse construction materials, compare supplier prices and send inquiries to shops in one place.",
+//     active: true,
+//   },
+//   {
+//     id: 2,
+//     question: "Is BuildMart free to use?",
+//     answer: "",
+//     active: true,
+//   },
+//   {
+//     id: 3,
+//     question: "How are the suppliers registered?",
+//     answer: "",
+//     active: true,
+//   },
+//   {
+//     id: 4,
+//     question: "How do I contact a supplier?",
+//     answer: "",
+//     active: true,
+//   },
+//   {
+//     id: 5,
+//     question: "Are the prices shown live market rates?",
+//     answer: "",
+//     active: true,
+//   },
+// ];
+
+// const BM_CMS_EMPTY_ITEM = {
+//   title: "",
+//   description: "",
+//   image: null,
+//   buttonText: "",
+//   buttonLink: "",
+//   active: true,
+// };
+
+// const BM_CMS_EMPTY_BLOG = {
+//   title: "",
+//   author: "BuildMart Team",
+//   slug: "",
+//   keywords: "",
+//   content: "",
+//   status: "Draft",
+//   image: "",
+//   imageName: "",
+//   readingTime: "",
+//   featured: false,
+// };
+
+// const BM_CMS_EMPTY_FAQ = {
+//   question: "",
+//   answer: "",
+//   active: true,
+// };
+
+// const BM_CMS_INITIAL_PLATFORM = {
+//   platformName: "BuildMart",
+//   tagline: "Construction Material Management & Comparison",
+//   phone: "042-111-BUILD",
+//   supportEmail: "support@buildmart.pk",
+// };
+
+// /* =========================================================
+//    BM CMS SHARED CLASSES
+// ========================================================= */
+
+// const BM_CMS_CARD =
+//   "rounded-xl border border-[color:var(--border-color)] bg-[var(--white-cards)] p-4 shadow-sm sm:p-5";
+
+// const BM_CMS_CARD_TITLE =
+//   "text-sm font-semibold uppercase tracking-wide text-[color:var(--primary-text)]";
+
+// const BM_CMS_INPUT =
+//   "mt-1 w-full rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)] outline-none focus:border-[var(--primary-yellow)] focus:ring-2 focus:ring-[var(--primary-yellow)]/40";
+
+// const BM_CMS_LABEL =
+//   "mb-1 block text-xs text-[color:var(--secondary-text)]";
+
+// const BM_CMS_BUTTON =
+//   "rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-4 py-2 text-sm text-[color:var(--primary-text)] hover:bg-[var(--off-white-background)]";
+
+// const BM_CMS_YELLOW_BUTTON =
+//   "rounded-md bg-[var(--primary-yellow)] px-4 py-2 text-sm text-[color:var(--charcoal-black)] hover:bg-[var(--hover-yellow)] disabled:cursor-not-allowed disabled:opacity-50";
+
+// const BM_CMS_ICON_BUTTON =
+//   "rounded-md p-1.5 text-[color:var(--secondary-text)] hover:bg-[var(--off-white-background)] hover:text-[color:var(--primary-text)]";
+
+// const BM_CMS_MENU_ITEM =
+//   "flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[color:var(--primary-text)] hover:bg-[var(--off-white-background)]";
+
+// const BM_CMS_NAMES = {
+//   slide: "Hero Slide",
+//   banner: "Banner",
+// };
+
+// const BM_CMS_ONLY_ACTIVE = (items) =>
+//   items.reduce((all, item) => (item.active ? [...all, item] : all), []);
+
+// const BM_CMS_TODAY = () => new Date().toISOString().slice(0, 10);
+
+// const BM_CMS_SLUGIFY = (value) =>
+//   value
+//     .toLowerCase()
+//     .trim()
+//     .replace(/[^a-z0-9]+/g, "-")
+//     .replace(/^-+|-+$/g, "");
+
+// /* =========================================================
+//    BM CMS SMALL COMPONENTS
+// ========================================================= */
+
+// const BmCmsImage = ({ src, alt }) => (
+//   <Image
+//     src={src}
+//     alt={alt}
+//     fill
+//     unoptimized
+//     className="object-cover"
+//   />
+// );
+
+// const BmCmsSwitch = ({ checked, onChange, label }) => (
+//   <button
+//     type="button"
+//     role="switch"
+//     aria-checked={checked}
+//     aria-label={label}
+//     onClick={onChange}
+//     className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${
+//       checked
+//         ? "bg-[var(--primary-yellow)]"
+//         : "bg-[var(--border-color)]"
+//     }`}
+//   >
+//     <span
+//       className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+//         checked ? "translate-x-4" : ""
+//       }`}
+//     />
+//   </button>
+// );
+
+// const BmCmsModal = ({
+//   title,
+//   onClose,
+//   children,
+//   size = "max-w-xl",
+// }) => (
+//   <div
+//     onClick={onClose}
+//     className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-3 sm:p-4"
+//   >
+//     <div
+//       onClick={(e) => e.stopPropagation()}
+//       className={`relative my-auto w-full ${size} rounded-xl bg-[var(--white-cards)] p-5 shadow-xl sm:p-6`}
+//     >
+//       <div className="mb-4 flex items-center justify-between gap-3">
+//         <h2 className="text-xl text-[color:var(--primary-text)]">
+//           {title}
+//         </h2>
+
+//         <button
+//           type="button"
+//           onClick={onClose}
+//           aria-label="Close modal"
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <X size={18} />
+//         </button>
+//       </div>
+
+//       {children}
+//     </div>
+//   </div>
+// );
+
+// /* =========================================================
+//    BM CMS RICH TEXT EDITOR
+//    About aur Blog dono mein use hoga
+// ========================================================= */
+
+// const BmCmsRichTextEditor = ({ value, onChange, editorId }) => {
+//   const handleCommand = (command) => {
+//     document.execCommand(command, false, null);
+//   };
+
+//   const handleHeading = (heading) => {
+//     document.execCommand("formatBlock", false, heading);
+//   };
+
+//   return (
+//     <div className="bmCms-richEditor overflow-hidden rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)]">
+//       <div className="flex flex-wrap items-center gap-1 border-b border-[color:var(--border-color)] p-2">
+//         <button
+//           type="button"
+//           title="Heading 1"
+//           onClick={() => handleHeading("h1")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <Heading1 size={16} />
+//         </button>
+
+//         <button
+//           type="button"
+//           title="Heading 2"
+//           onClick={() => handleHeading("h2")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <Heading2 size={16} />
+//         </button>
+
+//         <button
+//           type="button"
+//           title="Bold"
+//           onClick={() => handleCommand("bold")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <Bold size={16} />
+//         </button>
+
+//         <button
+//           type="button"
+//           title="Italic"
+//           onClick={() => handleCommand("italic")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <Italic size={16} />
+//         </button>
+
+//         <button
+//           type="button"
+//           title="Underline"
+//           onClick={() => handleCommand("underline")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <Underline size={16} />
+//         </button>
+
+//         <button
+//           type="button"
+//           title="Bullet List"
+//           onClick={() => handleCommand("insertUnorderedList")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <List size={16} />
+//         </button>
+
+//         <button
+//           type="button"
+//           title="Numbered List"
+//           onClick={() => handleCommand("insertOrderedList")}
+//           className={BM_CMS_ICON_BUTTON}
+//         >
+//           <ListOrdered size={16} />
+//         </button>
+//       </div>
+
+//       <div
+//         id={editorId}
+//         contentEditable
+//         suppressContentEditableWarning
+//         onInput={(e) => onChange(e.currentTarget.innerHTML)}
+//         dangerouslySetInnerHTML={{ __html: value }}
+//         className="min-h-[180px] p-3 text-sm text-[color:var(--primary-text)] outline-none"
+//       />
+//     </div>
+//   );
+// };
+
+
+
+
 
 
 
@@ -437,16 +879,293 @@ const BmCmsRichTextEditor = ({ value, onChange, editorId }) => {
 
 /* =========================================================
    BM CMS ITEM LIST — HERO / BANNERS
+   Row component: Preview, Delete aur Edit modal row ke andar
 ========================================================= */
 
-const BmCmsItemList = ({
+const BM_CMS_NAMES = {
+  slide: "Hero Slide",
+  banner: "Banner",
+};
+
+const BmCmsItemFormModal = ({
   kind,
-  items,
+  form,
+  isEdit,
+  onChange,
+  onUpload,
+  onSave,
+  onClose,
+}) => (
+  <BmCmsModal
+    title={`${isEdit ? "Edit" : "Create New"} ${BM_CMS_NAMES[kind]}`}
+    onClose={onClose}
+  >
+          <div>
+            <label htmlFor="bmCmsItemTitle" className={BM_CMS_LABEL}>
+              Title / Heading
+            </label>
+            <input
+              id="bmCmsItemTitle"
+              value={form.title}
+              onChange={(e) =>
+                onChange("title", e.target.value)
+              }
+              className={BM_CMS_INPUT}
+            />
+          </div>
+
+          <div className="mt-4">
+            <label htmlFor="bmCmsItemDescription" className={BM_CMS_LABEL}>
+              Description / Text
+            </label>
+            <textarea
+              id="bmCmsItemDescription"
+              rows={3}
+              value={form.description}
+              onChange={(e) =>
+                onChange("description", e.target.value)
+              }
+              className={BM_CMS_INPUT}
+            />
+          </div>
+
+          <div className="mt-4">
+            <label htmlFor="bmCmsItemImage" className={BM_CMS_LABEL}>
+              Image File Upload
+            </label>
+            <input
+              id="bmCmsItemImage"
+              type="file"
+              accept="image/*"
+              onChange={onUpload}
+              className="block w-full text-sm text-[color:var(--primary-text)]"
+            />
+
+            {form.image && (
+              <div className="relative mt-3 h-24 w-40 overflow-hidden rounded-md">
+                <BmCmsImage src={form.image} alt="Selected image" />
+              </div>
+            )}
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="bmCmsItemButtonText" className={BM_CMS_LABEL}>
+                Button Text
+              </label>
+              <input
+                id="bmCmsItemButtonText"
+                value={form.buttonText}
+                onChange={(e) =>
+                  onChange("buttonText", e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="bmCmsItemButtonLink" className={BM_CMS_LABEL}>
+                Button Link
+              </label>
+              <input
+                id="bmCmsItemButtonLink"
+                value={form.buttonLink}
+                onChange={(e) =>
+                  onChange("buttonLink", e.target.value)
+                }
+                placeholder="/materials"
+                className={BM_CMS_INPUT}
+              />
+            </div>
+          </div>
+
+          <label className="mt-4 flex items-center gap-2 text-sm text-[color:var(--primary-text)]">
+            <BmCmsSwitch
+              checked={form.active}
+              onChange={() =>
+                onChange("active", !form.active)
+              }
+              label="Active"
+            />
+            Active
+          </label>
+
+          <div className="mt-5 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className={BM_CMS_BUTTON}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              onClick={onSave}
+              disabled={!form.title.trim()}
+              className={BM_CMS_YELLOW_BUTTON}
+            >
+              Save {BM_CMS_NAMES[kind]}
+            </button>
+          </div>
+  </BmCmsModal>
+);
+
+const BmCmsItemRow = ({
+  kind,
+  item,
+  itemModal,
+  itemFormProps,
+  itemPreview,
+  itemDelete,
   onToggle,
   onPreview,
   onEdit,
   onDelete,
-}) => (
+  onClosePreview,
+  onCloseDelete,
+  onConfirmDelete,
+}) => {
+  const isEditing =
+    itemModal?.item &&
+    itemModal.kind === kind &&
+    itemModal.item.id === item.id;
+
+  const isPreview =
+    itemPreview &&
+    itemPreview.kind === kind &&
+    itemPreview.item.id === item.id;
+
+  const isDelete =
+    itemDelete &&
+    itemDelete.kind === kind &&
+    itemDelete.item.id === item.id;
+
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[color:var(--border-color)] py-3 last:border-b-0">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <div className="relative flex h-12 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-[var(--off-white-background)] text-[color:var(--secondary-text)]">
+          {item.image ? (
+            <BmCmsImage src={item.image} alt={item.title} />
+          ) : (
+            <ImageIcon size={18} />
+          )}
+        </div>
+
+        <div className="min-w-0">
+          <p className="truncate text-sm font-medium text-[color:var(--primary-text)]">
+            {item.title}
+          </p>
+
+          <p className="line-clamp-1 text-xs text-[color:var(--secondary-text)]">
+            {item.description}
+          </p>
+
+          <span
+            className={`mt-1 inline-block rounded px-1.5 py-0.5 text-[10px] ${
+              item.active
+                ? "bg-green-50 text-green-700"
+                : "bg-[var(--off-white-background)] text-[color:var(--secondary-text)]"
+            }`}
+          >
+            {item.active ? "Active" : "Inactive"}
+          </span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-1">
+        <BmCmsSwitch
+          checked={item.active}
+          onChange={() => onToggle(kind, item.id)}
+          label={`Toggle ${item.title}`}
+        />
+
+        <button
+          type="button"
+          onClick={() => onPreview(kind, item)}
+          aria-label={`Preview ${item.title}`}
+          className={BM_CMS_ICON_BUTTON}
+        >
+          <Eye size={16} />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onEdit(kind, item)}
+          aria-label={`Edit ${item.title}`}
+          className={BM_CMS_ICON_BUTTON}
+        >
+          <Pencil size={16} />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onDelete(kind, item)}
+          aria-label={`Delete ${item.title}`}
+          className={`${BM_CMS_ICON_BUTTON} text-red-500`}
+        >
+          <Trash2 size={16} />
+        </button>
+
+        {/* EDIT MODAL */}
+        {isEditing && <BmCmsItemFormModal {...itemFormProps} />}
+
+        {/* PREVIEW MODAL */}
+        {isPreview && (
+          <BmCmsModal title="Preview" onClose={onClosePreview}>
+            <div className="relative aspect-video overflow-hidden rounded-md bg-[var(--off-white-background)]">
+              {item.image && <BmCmsImage src={item.image} alt={item.title} />}
+            </div>
+
+            <h3 className="mt-3 font-semibold text-[color:var(--primary-text)]">
+              {item.title}
+            </h3>
+
+            <p className="mt-1 text-sm text-[color:var(--secondary-text)]">
+              {item.description}
+            </p>
+
+            <p className="mt-2 text-xs text-[color:var(--secondary-text)]">
+              {item.active ? "Active" : "Inactive"}
+            </p>
+          </BmCmsModal>
+        )}
+
+        {/* DELETE MODAL */}
+        {isDelete && (
+          <BmCmsModal
+            title={`Delete ${BM_CMS_NAMES[kind]}?`}
+            onClose={onCloseDelete}
+          >
+            <p className="text-sm text-[color:var(--secondary-text)]">
+              Delete "{item.title}". This cannot be undone.
+            </p>
+
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={onCloseDelete}
+                className={BM_CMS_BUTTON}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                onClick={onConfirmDelete}
+                className="rounded-md bg-red-600 px-4 py-2 text-sm text-white"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </BmCmsModal>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const BmCmsItemList = ({ kind, items, rowProps }) => (
   <div>
     {items.length === 0 && (
       <p className="py-4 text-sm text-[color:var(--secondary-text)]">
@@ -455,78 +1174,16 @@ const BmCmsItemList = ({
     )}
 
     {items.map((item) => (
-      <div
+      <BmCmsItemRow
         key={item.id}
-        className="flex flex-wrap items-center justify-between gap-3 border-b border-[color:var(--border-color)] py-3 last:border-b-0"
-      >
-        <div className="flex min-w-0 flex-1 items-center gap-3">
-          <div className="relative flex h-12 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-[var(--off-white-background)] text-[color:var(--secondary-text)]">
-            {item.image ? (
-              <BmCmsImage src={item.image} alt={item.title} />
-            ) : (
-              <ImageIcon size={18} />
-            )}
-          </div>
-
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-[color:var(--primary-text)]">
-              {item.title}
-            </p>
-
-            <p className="line-clamp-1 text-xs text-[color:var(--secondary-text)]">
-              {item.description}
-            </p>
-
-            <span
-              className={`mt-1 inline-block rounded px-1.5 py-0.5 text-[10px] ${
-                item.active
-                  ? "bg-green-50 text-green-700"
-                  : "bg-[var(--off-white-background)] text-[color:var(--secondary-text)]"
-              }`}
-            >
-              {item.active ? "Active" : "Inactive"}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-1">
-          <BmCmsSwitch
-            checked={item.active}
-            onChange={() => onToggle(kind, item.id)}
-            label={`Toggle ${item.title}`}
-          />
-
-          <button
-            type="button"
-            onClick={() => onPreview(item)}
-            aria-label={`Preview ${item.title}`}
-            className={BM_CMS_ICON_BUTTON}
-          >
-            <Eye size={16} />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onEdit(kind, item)}
-            aria-label={`Edit ${item.title}`}
-            className={BM_CMS_ICON_BUTTON}
-          >
-            <Pencil size={16} />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onDelete(kind, item)}
-            aria-label={`Delete ${item.title}`}
-            className={`${BM_CMS_ICON_BUTTON} text-red-500`}
-          >
-            <Trash2 size={16} />
-          </button>
-        </div>
-      </div>
+        kind={kind}
+        item={item}
+        {...rowProps}
+      />
     ))}
   </div>
 );
+
 
 /* =========================================================
    BM CMS HERO PREVIEW
@@ -668,7 +1325,400 @@ const BmCmsBlogThumb = ({ blog, className = "h-12 w-[72px]" }) => (
    BM CMS BLOG TABLE
 ========================================================= */
 
-const BmCmsBlogsTable = ({ blogs, onMenu }) => (
+/* =========================================================
+   BM CMS BLOG TABLE
+   Row component: Menu, View, Edit aur Delete modal row ke andar
+========================================================= */
+
+const BmCmsBlogFormModal = ({
+  form,
+  isEdit,
+  onChange,
+  onTitle,
+  onSlug,
+  onUpload,
+  onSave,
+  onClose,
+}) => (
+  <BmCmsModal
+    title={!isEdit ? "Add Blog" : "Edit Blog"}
+    onClose={onClose}
+    size="max-w-3xl"
+  >
+          <div className="grid max-h-[75vh] grid-cols-1 gap-4 overflow-y-auto pr-1 sm:grid-cols-2">
+            <div>
+              <label htmlFor="bmCmsBlogTitle" className={BM_CMS_LABEL}>
+                Blog Title *
+              </label>
+              <input
+                id="bmCmsBlogTitle"
+                value={form.title}
+                onChange={(e) =>
+                  onTitle(e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="bmCmsBlogSlug" className={BM_CMS_LABEL}>
+                Slug
+              </label>
+              <input
+                id="bmCmsBlogSlug"
+                value={form.slug}
+                onChange={(e) =>
+                  onSlug(e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="bmCmsBlogKeywords" className={BM_CMS_LABEL}>
+                Keywords / Tags
+              </label>
+              <input
+                id="bmCmsBlogKeywords"
+                value={form.keywords}
+                onChange={(e) =>
+                  onChange("keywords", e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="bmCmsBlogAuthor" className={BM_CMS_LABEL}>
+                Author
+              </label>
+              <input
+                id="bmCmsBlogAuthor"
+                value={form.author}
+                onChange={(e) =>
+                  onChange("author", e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="bmCmsBlogDescription"
+                className={BM_CMS_LABEL}
+              >
+                Short Description
+              </label>
+              <textarea
+                id="bmCmsBlogDescription"
+                rows={3}
+                value={form.description || ""}
+                onChange={(e) =>
+                  onChange("description", e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="bmCmsBlogReadingTime"
+                className={BM_CMS_LABEL}
+              >
+                Estimated Reading Time (minutes)
+              </label>
+              <input
+                id="bmCmsBlogReadingTime"
+                type="number"
+                min="1"
+                value={form.readingTime}
+                onChange={(e) =>
+                  onChange("readingTime", e.target.value)
+                }
+                placeholder="e.g. 5"
+                className={BM_CMS_INPUT}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="bmCmsBlogStatus" className={BM_CMS_LABEL}>
+                Status
+              </label>
+              <select
+                id="bmCmsBlogStatus"
+                value={form.status}
+                onChange={(e) =>
+                  onChange("status", e.target.value)
+                }
+                className={BM_CMS_INPUT}
+              >
+                <option>Draft</option>
+                <option>Published</option>
+              </select>
+            </div>
+
+            {/* Featured image upload */}
+            <div className="sm:col-span-2">
+              <label className={BM_CMS_LABEL}>
+                Featured Image / File Upload
+              </label>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <BmCmsBlogThumb
+                  blog={form}
+                  className="h-16 w-24"
+                />
+
+                <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)]">
+                  <Upload size={16} />
+                  {form.imageName || "Choose File"}
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={onUpload}
+                    className="hidden"
+                  />
+                </label>
+
+                {form.image && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onChange("image", "");
+                      onChange("imageName", "");
+                    }}
+                    className="text-xs text-red-600"
+                  >
+                    Remove Image
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Rich text content */}
+            <div className="sm:col-span-2">
+              <label className={BM_CMS_LABEL}>Full Content</label>
+
+              <BmCmsRichTextEditor
+                editorId="bmCmsBlogEditor"
+                value={form.content}
+                onChange={(value) =>
+                  onChange("content", value)
+                }
+              />
+            </div>
+
+            <label className="flex items-center gap-2 text-sm text-[color:var(--primary-text)] sm:col-span-2">
+              <input
+                type="checkbox"
+                checked={form.featured}
+                onChange={(e) =>
+                  onChange("featured", e.target.checked)
+                }
+                className="h-4 w-4 accent-[var(--primary-yellow)]"
+              />
+              Show in Featured Blogs
+            </label>
+          </div>
+
+          <div className="mt-5 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className={BM_CMS_BUTTON}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              disabled={!form.title.trim() || !form.author.trim()}
+              onClick={onSave}
+              className={BM_CMS_YELLOW_BUTTON}
+            >
+              {!isEdit ? "Save Blog" : "Save Changes"}
+            </button>
+          </div>
+  </BmCmsModal>
+);
+
+const BmCmsBlogRow = ({
+  blog,
+  blogMenu,
+  blogView,
+  blogDeleteId,
+  blogModalOpen,
+  blogEditId,
+  blogFormProps,
+  onMenu,
+  onCloseMenu,
+  onView,
+  onCloseView,
+  onEdit,
+  onToggleStatus,
+  onAskDelete,
+  onCloseDelete,
+  onConfirmDelete,
+}) => (
+  <tr className="border-t border-[color:var(--border-color)]">
+    <td className="px-4 py-3 text-[color:var(--primary-text)]">
+      <div className="flex items-center gap-2">
+        <BmCmsBlogThumb blog={blog} />
+        <span className="max-w-[220px]">{blog.title}</span>
+      </div>
+    </td>
+
+    <td className="px-4 py-3 text-[color:var(--primary-text)]">
+      {blog.author}
+    </td>
+
+    <td className="px-4 py-3 text-[color:var(--primary-text)]">
+      {blog.readingTime || "—"} min
+    </td>
+
+    <td className="px-4 py-3">
+      {blog.featured ? (
+        <span className="text-green-600">Featured</span>
+      ) : (
+        <span className="text-[color:var(--secondary-text)]">No</span>
+      )}
+    </td>
+
+    <td className="px-4 py-3">
+      <span
+        className={`rounded-full px-2.5 py-1 text-xs ${
+          blog.status === "Published"
+            ? "bg-green-50 text-green-700"
+            : "bg-orange-50 text-orange-600"
+        }`}
+      >
+        {blog.status}
+      </span>
+    </td>
+
+    <td className="px-4 py-3 text-[color:var(--primary-text)]">
+      {blog.date}
+    </td>
+
+    <td className="px-4 py-3">
+      <button
+        type="button"
+        onClick={(e) => onMenu(e, blog)}
+        aria-label={`Actions for ${blog.title}`}
+        className="rounded-md border border-[color:var(--border-color)] p-1.5 text-[color:var(--primary-text)]"
+      >
+        <MoreVertical size={16} />
+      </button>
+
+      {/* ACTIONS MENU */}
+      {blogMenu?.blog.id === blog.id && (
+        <>
+          <div onClick={onCloseMenu} className="fixed inset-0 z-40" />
+
+          <div
+            style={{ top: blogMenu.top, left: blogMenu.left }}
+            className="fixed z-50 w-40 overflow-hidden rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] py-1 shadow-lg"
+          >
+            <button
+              type="button"
+              onClick={() => onView(blog)}
+              className={BM_CMS_MENU_ITEM}
+            >
+              <Eye size={16} />
+              View
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onEdit(blog)}
+              className={BM_CMS_MENU_ITEM}
+            >
+              <Pencil size={16} />
+              Edit
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onToggleStatus(blog)}
+              className={BM_CMS_MENU_ITEM}
+            >
+              {blog.status === "Published" ? "Unpublish" : "Publish"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onAskDelete(blog.id)}
+              className={`${BM_CMS_MENU_ITEM} text-red-600`}
+            >
+              <Trash2 size={16} />
+              Delete
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* EDIT MODAL */}
+      {blogModalOpen && blogEditId === blog.id && (
+        <BmCmsBlogFormModal {...blogFormProps} />
+      )}
+
+      {/* VIEW MODAL */}
+      {blogView?.id === blog.id && (
+        <BmCmsModal
+          title={blogView.title}
+          onClose={onCloseView}
+          size="max-w-3xl"
+        >
+          <div className="flex flex-wrap gap-3 text-xs text-[color:var(--secondary-text)]">
+            <span>{blogView.author}</span>
+            <span>{blogView.date}</span>
+            <span>{blogView.readingTime || "—"} min read</span>
+            <span>{blogView.status}</span>
+          </div>
+
+          <div className="mt-4">
+            <BmCmsBlogThumb blog={blogView} className="h-48 w-full" />
+          </div>
+
+          <div
+            className="prose mt-4 max-w-none text-sm text-[color:var(--primary-text)]"
+            dangerouslySetInnerHTML={{ __html: blogView.content || "" }}
+          />
+        </BmCmsModal>
+      )}
+
+      {/* DELETE MODAL */}
+      {blogDeleteId === blog.id && (
+        <BmCmsModal title="Delete Blog" onClose={onCloseDelete}>
+          <p className="text-sm text-[color:var(--secondary-text)]">
+            Are you sure you want to delete this blog?
+          </p>
+
+          <div className="mt-5 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={onCloseDelete}
+              className={BM_CMS_BUTTON}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              onClick={onConfirmDelete}
+              className="rounded-md bg-red-600 px-4 py-2 text-sm text-white"
+            >
+              Confirm Delete
+            </button>
+          </div>
+        </BmCmsModal>
+      )}
+    </td>
+  </tr>
+);
+
+const BmCmsBlogsTable = ({ blogs, rowProps }) => (
   <div className="overflow-x-auto">
     <table className="w-full min-w-[850px] text-left text-sm">
       <thead className="bg-[var(--off-white-background)] text-xs uppercase text-[color:var(--secondary-text)]">
@@ -691,65 +1741,209 @@ const BmCmsBlogsTable = ({ blogs, onMenu }) => (
 
       <tbody>
         {blogs.map((blog) => (
-          <tr
-            key={blog.id}
-            className="border-t border-[color:var(--border-color)]"
-          >
-            <td className="px-4 py-3 text-[color:var(--primary-text)]">
-              <div className="flex items-center gap-2">
-                <BmCmsBlogThumb blog={blog} />
-                <span className="max-w-[220px]">{blog.title}</span>
-              </div>
-            </td>
-
-            <td className="px-4 py-3 text-[color:var(--primary-text)]">
-              {blog.author}
-            </td>
-
-            <td className="px-4 py-3 text-[color:var(--primary-text)]">
-              {blog.readingTime || "—"} min
-            </td>
-
-            <td className="px-4 py-3">
-              {blog.featured ? (
-                <span className="text-green-600">Featured</span>
-              ) : (
-                <span className="text-[color:var(--secondary-text)]">No</span>
-              )}
-            </td>
-
-            <td className="px-4 py-3">
-              <span
-                className={`rounded-full px-2.5 py-1 text-xs ${
-                  blog.status === "Published"
-                    ? "bg-green-50 text-green-700"
-                    : "bg-orange-50 text-orange-600"
-                }`}
-              >
-                {blog.status}
-              </span>
-            </td>
-
-            <td className="px-4 py-3 text-[color:var(--primary-text)]">
-              {blog.date}
-            </td>
-
-            <td className="px-4 py-3">
-              <button
-                type="button"
-                onClick={(e) => onMenu(e, blog)}
-                aria-label={`Actions for ${blog.title}`}
-                className="rounded-md border border-[color:var(--border-color)] p-1.5 text-[color:var(--primary-text)]"
-              >
-                <MoreVertical size={16} />
-              </button>
-            </td>
-          </tr>
+          <BmCmsBlogRow key={blog.id} blog={blog} {...rowProps} />
         ))}
       </tbody>
     </table>
   </div>
 );
+
+/* =========================================================
+   BM CMS OTHER ROW / CARD COMPONENTS
+========================================================= */
+
+const BmCmsBannerCard = ({ banner }) => (
+  <div className="overflow-hidden rounded-xl border border-[color:var(--border-color)] bg-[var(--white-cards)]">
+    <div className="relative h-36 bg-[var(--off-white-background)] sm:h-44">
+      {banner.image && (
+        <BmCmsImage src={banner.image} alt={banner.title} />
+      )}
+    </div>
+
+    <div className="p-3">
+      <h3 className="font-semibold text-[color:var(--primary-text)]">
+        {banner.title}
+      </h3>
+      <p className="mt-1 text-sm text-[color:var(--secondary-text)]">
+        {banner.description}
+      </p>
+    </div>
+  </div>
+);
+
+const BmCmsMarqueeRow = ({ item, index, onToggle, onMove, onDelete }) => (
+  <div className="flex flex-wrap items-center gap-3 border-b border-[color:var(--border-color)] py-3 last:border-0">
+    <BmCmsSwitch
+      checked={item.active}
+      onChange={() => onToggle(item.id)}
+      label={`Toggle ${item.text}`}
+    />
+
+    <p className="min-w-0 flex-1 text-sm text-[color:var(--primary-text)]">
+      {item.text}
+    </p>
+
+    <button
+      type="button"
+      onClick={() => onMove(index, -1)}
+      aria-label="Move announcement up"
+      className={BM_CMS_ICON_BUTTON}
+    >
+      <ChevronUp size={16} />
+    </button>
+
+    <button
+      type="button"
+      onClick={() => onMove(index, 1)}
+      aria-label="Move announcement down"
+      className={BM_CMS_ICON_BUTTON}
+    >
+      <ChevronDown size={16} />
+    </button>
+
+    <button
+      type="button"
+      onClick={() => onDelete(item.id)}
+      aria-label="Delete announcement"
+      className={`${BM_CMS_ICON_BUTTON} text-red-500`}
+    >
+      <Trash2 size={16} />
+    </button>
+  </div>
+);
+
+const BmCmsFeaturedBlogRow = ({ blog, onToggle }) => (
+  <label className="flex items-center gap-3 text-sm text-[color:var(--primary-text)]">
+    <input
+      type="checkbox"
+      checked={blog.featured}
+      onChange={() => onToggle(blog.id)}
+      className="h-4 w-4 accent-[var(--primary-yellow)]"
+    />
+
+    <span>{blog.title}</span>
+  </label>
+);
+
+const BmCmsFaqFormModal = ({ form, isEdit, onChange, onSave, onClose }) => (
+  <BmCmsModal title={!isEdit ? "Add FAQ" : "Edit FAQ"} onClose={onClose}>
+    <div>
+      <label htmlFor="bmCmsFaqQuestion" className={BM_CMS_LABEL}>
+        Question
+      </label>
+      <input
+        id="bmCmsFaqQuestion"
+        value={form.question}
+        onChange={(e) => onChange("question", e.target.value)}
+        className={BM_CMS_INPUT}
+      />
+    </div>
+
+    <div className="mt-4">
+      <label htmlFor="bmCmsFaqAnswer" className={BM_CMS_LABEL}>
+        Answer
+      </label>
+      <textarea
+        id="bmCmsFaqAnswer"
+        rows={5}
+        value={form.answer}
+        onChange={(e) => onChange("answer", e.target.value)}
+        className={BM_CMS_INPUT}
+      />
+    </div>
+
+    <label className="mt-4 flex items-center gap-2 text-sm text-[color:var(--primary-text)]">
+      <input
+        type="checkbox"
+        checked={form.active}
+        onChange={(e) => onChange("active", e.target.checked)}
+        className="h-4 w-4 accent-[var(--primary-yellow)]"
+      />
+      Active
+    </label>
+
+    <div className="mt-5 flex justify-end gap-3">
+      <button type="button" onClick={onClose} className={BM_CMS_BUTTON}>
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        onClick={onSave}
+        disabled={!form.question.trim()}
+        className={BM_CMS_YELLOW_BUTTON}
+      >
+        Save FAQ
+      </button>
+    </div>
+  </BmCmsModal>
+);
+
+const BmCmsFaqCard = ({
+  faq,
+  faqModalOpen,
+  faqEditId,
+  faqFormProps,
+  onToggle,
+  onEdit,
+  onDelete,
+}) => (
+  <div
+    className={`${BM_CMS_CARD} flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between`}
+  >
+    <div className="min-w-0 flex-1">
+      <h3 className="font-medium text-[color:var(--primary-text)]">
+        {faq.question}
+      </h3>
+
+      <p className="mt-2 whitespace-pre-line text-sm text-[color:var(--secondary-text)]">
+        {faq.answer || "No answer added yet."}
+      </p>
+
+      <span
+        className={`mt-2 inline-block rounded px-2 py-1 text-xs ${
+          faq.active
+            ? "bg-green-50 text-green-700"
+            : "bg-[var(--off-white-background)] text-[color:var(--secondary-text)]"
+        }`}
+      >
+        {faq.active ? "Active" : "Inactive"}
+      </span>
+    </div>
+
+    <div className="flex shrink-0 items-center gap-2">
+      <BmCmsSwitch
+        checked={faq.active}
+        onChange={() => onToggle(faq.id)}
+        label={`Toggle ${faq.question}`}
+      />
+
+      <button
+        type="button"
+        onClick={() => onEdit(faq)}
+        className={BM_CMS_ICON_BUTTON}
+        aria-label="Edit FAQ"
+      >
+        <Pencil size={16} />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => onDelete(faq.id)}
+        className={`${BM_CMS_ICON_BUTTON} text-red-500`}
+        aria-label="Delete FAQ"
+      >
+        <Trash2 size={16} />
+      </button>
+
+      {/* EDIT MODAL */}
+      {faqModalOpen && faqEditId === faq.id && (
+        <BmCmsFaqFormModal {...faqFormProps} />
+      )}
+    </div>
+  </div>
+);
+
 
 /* =========================================================
    BM CMS MAIN PAGE
@@ -813,10 +2007,6 @@ export default function BmCmsPage() {
     banner: [banners, setBanners],
   };
 
-  const BM_CMS_NAMES = {
-    slide: "Hero Slide",
-    banner: "Banner",
-  };
 
   const BM_CMS_SHOW_TOAST = (message) => {
     setToast(message);
@@ -1106,6 +2296,91 @@ export default function BmCmsPage() {
     setBrandLogoName(file.name);
   };
 
+  /* ---------------- Row props (modals rows ke andar) ---------------- */
+
+  const BM_CMS_OPEN_BLOG_MENU = (e, blog) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    setBlogMenu({
+      blog,
+      top: rect.bottom + 4,
+      left: Math.max(8, rect.right - 160),
+    });
+  };
+
+  const BM_CMS_VIEW_BLOG = (blog) => {
+    setBlogView(blog);
+    setBlogMenu(null);
+  };
+
+  const BM_CMS_ASK_DELETE_BLOG = (id) => {
+    setBlogDeleteId(id);
+    setBlogMenu(null);
+  };
+
+  const itemFormProps = {
+    kind: itemModal?.kind,
+    isEdit: Boolean(itemModal?.item),
+    form: itemForm,
+    onChange: BM_CMS_CHANGE_ITEM,
+    onUpload: BM_CMS_UPLOAD_ITEM_IMAGE,
+    onSave: BM_CMS_SAVE_ITEM,
+    onClose: () => setItemModal(null),
+  };
+
+  const itemRowProps = {
+    itemModal,
+    itemFormProps,
+    itemPreview,
+    itemDelete,
+    onToggle: BM_CMS_TOGGLE_ITEM,
+    onPreview: (kind, item) => setItemPreview({ kind, item }),
+    onEdit: BM_CMS_OPEN_ITEM,
+    onDelete: (kind, item) => setItemDelete({ kind, item }),
+    onClosePreview: () => setItemPreview(null),
+    onCloseDelete: () => setItemDelete(null),
+    onConfirmDelete: BM_CMS_DELETE_ITEM,
+  };
+
+  const blogFormProps = {
+    isEdit: blogEditId !== null,
+    form: blogForm,
+    onChange: BM_CMS_CHANGE_BLOG,
+    onTitle: BM_CMS_CHANGE_BLOG_TITLE,
+    onSlug: BM_CMS_CHANGE_BLOG_SLUG,
+    onUpload: BM_CMS_UPLOAD_BLOG_IMAGE,
+    onSave: BM_CMS_SAVE_BLOG,
+    onClose: () => setBlogModalOpen(false),
+  };
+
+  const blogRowProps = {
+    blogMenu,
+    blogView,
+    blogDeleteId,
+    blogModalOpen,
+    blogEditId,
+    blogFormProps,
+    onMenu: BM_CMS_OPEN_BLOG_MENU,
+    onCloseMenu: () => setBlogMenu(null),
+    onView: BM_CMS_VIEW_BLOG,
+    onCloseView: () => setBlogView(null),
+    onEdit: BM_CMS_OPEN_EDIT_BLOG,
+    onToggleStatus: BM_CMS_TOGGLE_BLOG_STATUS,
+    onAskDelete: BM_CMS_ASK_DELETE_BLOG,
+    onCloseDelete: () => setBlogDeleteId(null),
+    onConfirmDelete: BM_CMS_BLOG_DELETE,
+  };
+
+  const faqFormProps = {
+    isEdit: faqEditId !== null,
+    form: faqForm,
+    onChange: (key, value) =>
+      setFaqForm((old) => ({ ...old, [key]: value })),
+    onSave: BM_CMS_SAVE_FAQ,
+    onClose: () => setFaqModalOpen(false),
+  };
+
+
   /* =========================================================
      BM CMS PAGE UI
   ========================================================= */
@@ -1172,10 +2447,7 @@ export default function BmCmsPage() {
               <BmCmsItemList
                 kind="slide"
                 items={slides}
-                onToggle={BM_CMS_TOGGLE_ITEM}
-                onPreview={setItemPreview}
-                onEdit={BM_CMS_OPEN_ITEM}
-                onDelete={(kind, item) => setItemDelete({ kind, item })}
+                rowProps={itemRowProps}
               />
             </div>
           </div>
@@ -1212,28 +2484,7 @@ export default function BmCmsPage() {
 
           <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {BM_CMS_ONLY_ACTIVE(banners).map((banner) => (
-              <div
-                key={banner.id}
-                className="overflow-hidden rounded-xl border border-[color:var(--border-color)] bg-[var(--white-cards)]"
-              >
-                <div className="relative h-36 bg-[var(--off-white-background)] sm:h-44">
-                  {banner.image && (
-                    <BmCmsImage
-                      src={banner.image}
-                      alt={banner.title}
-                    />
-                  )}
-                </div>
-
-                <div className="p-3">
-                  <h3 className="font-semibold text-[color:var(--primary-text)]">
-                    {banner.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-[color:var(--secondary-text)]">
-                    {banner.description}
-                  </p>
-                </div>
-              </div>
+              <BmCmsBannerCard key={banner.id} banner={banner} />
             ))}
           </div>
 
@@ -1244,10 +2495,7 @@ export default function BmCmsPage() {
               <BmCmsItemList
                 kind="banner"
                 items={banners}
-                onToggle={BM_CMS_TOGGLE_ITEM}
-                onPreview={setItemPreview}
-                onEdit={BM_CMS_OPEN_ITEM}
-                onDelete={(kind, item) => setItemDelete({ kind, item })}
+                rowProps={itemRowProps}
               />
             </div>
           </div>
@@ -1292,55 +2540,14 @@ export default function BmCmsPage() {
 
             <div className="mt-4">
               {announcements.map((item, index) => (
-                <div
+                <BmCmsMarqueeRow
                   key={item.id}
-                  className="flex flex-wrap items-center gap-3 border-b border-[color:var(--border-color)] py-3 last:border-0"
-                >
-                  <BmCmsSwitch
-                    checked={item.active}
-                    onChange={() =>
-                      BM_CMS_TOGGLE_ANNOUNCEMENT(item.id)
-                    }
-                    label={`Toggle ${item.text}`}
-                  />
-
-                  <p className="min-w-0 flex-1 text-sm text-[color:var(--primary-text)]">
-                    {item.text}
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      BM_CMS_MOVE_ANNOUNCEMENT(index, -1)
-                    }
-                    aria-label="Move announcement up"
-                    className={BM_CMS_ICON_BUTTON}
-                  >
-                    <ChevronUp size={16} />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      BM_CMS_MOVE_ANNOUNCEMENT(index, 1)
-                    }
-                    aria-label="Move announcement down"
-                    className={BM_CMS_ICON_BUTTON}
-                  >
-                    <ChevronDown size={16} />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      BM_CMS_DELETE_ANNOUNCEMENT(item.id)
-                    }
-                    aria-label="Delete announcement"
-                    className={`${BM_CMS_ICON_BUTTON} text-red-500`}
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
+                  item={item}
+                  index={index}
+                  onToggle={BM_CMS_TOGGLE_ANNOUNCEMENT}
+                  onMove={BM_CMS_MOVE_ANNOUNCEMENT}
+                  onDelete={BM_CMS_DELETE_ANNOUNCEMENT}
+                />
               ))}
             </div>
           </div>
@@ -1516,14 +2723,7 @@ export default function BmCmsPage() {
             <div className="mt-4">
               <BmCmsBlogsTable
                 blogs={BM_CMS_BLOGS_VISIBLE}
-                onMenu={(e, blog) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  setBlogMenu({
-                    blog,
-                    top: rect.bottom + 4,
-                    left: Math.max(8, rect.right - 160),
-                  });
-                }}
+                rowProps={blogRowProps}
               />
             </div>
 
@@ -1543,350 +2743,24 @@ export default function BmCmsPage() {
 
             <div className="mt-4 flex flex-col gap-3">
               {blogs.map((blog) => (
-                <label
+                <BmCmsFeaturedBlogRow
                   key={blog.id}
-                  className="flex items-center gap-3 text-sm text-[color:var(--primary-text)]"
-                >
-                  <input
-                    type="checkbox"
-                    checked={blog.featured}
-                    onChange={() =>
-                      BM_CMS_TOGGLE_FEATURED_BLOG(blog.id)
-                    }
-                    className="h-4 w-4 accent-[var(--primary-yellow)]"
-                  />
-
-                  <span>{blog.title}</span>
-                </label>
+                  blog={blog}
+                  onToggle={BM_CMS_TOGGLE_FEATURED_BLOG}
+                />
               ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* BLOG ACTIONS MENU */}
-      {blogMenu && (
-        <>
-          <div
-            onClick={() => setBlogMenu(null)}
-            className="fixed inset-0 z-40"
-          />
 
-          <div
-            style={{
-              top: blogMenu.top,
-              left: blogMenu.left,
-            }}
-            className="fixed z-50 w-40 overflow-hidden rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] py-1 shadow-lg"
-          >
-            <button
-              type="button"
-              onClick={() => {
-                setBlogView(blogMenu.blog);
-                setBlogMenu(null);
-              }}
-              className={BM_CMS_MENU_ITEM}
-            >
-              <Eye size={16} />
-              View
-            </button>
-
-            <button
-              type="button"
-              onClick={() => BM_CMS_OPEN_EDIT_BLOG(blogMenu.blog)}
-              className={BM_CMS_MENU_ITEM}
-            >
-              <Pencil size={16} />
-              Edit
-            </button>
-
-            <button
-              type="button"
-              onClick={() => BM_CMS_TOGGLE_BLOG_STATUS(blogMenu.blog)}
-              className={BM_CMS_MENU_ITEM}
-            >
-              {blogMenu.blog.status === "Published" ? "Unpublish" : "Publish"}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                setBlogDeleteId(blogMenu.blog.id);
-                setBlogMenu(null);
-              }}
-              className={`${BM_CMS_MENU_ITEM} text-red-600`}
-            >
-              <Trash2 size={16} />
-              Delete
-            </button>
-          </div>
-        </>
+      {/* ADD BLOG MODAL (edit modal row ke andar hai) */}
+      {blogModalOpen && blogEditId === null && (
+        <BmCmsBlogFormModal {...blogFormProps} />
       )}
 
-      {/* ADD / EDIT BLOG MODAL */}
-      {blogModalOpen && (
-        <BmCmsModal
-          title={blogEditId === null ? "Add Blog" : "Edit Blog"}
-          onClose={() => setBlogModalOpen(false)}
-          size="max-w-3xl"
-        >
-          <div className="grid max-h-[75vh] grid-cols-1 gap-4 overflow-y-auto pr-1 sm:grid-cols-2">
-            <div>
-              <label htmlFor="bmCmsBlogTitle" className={BM_CMS_LABEL}>
-                Blog Title *
-              </label>
-              <input
-                id="bmCmsBlogTitle"
-                value={blogForm.title}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG_TITLE(e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              />
-            </div>
 
-            <div>
-              <label htmlFor="bmCmsBlogSlug" className={BM_CMS_LABEL}>
-                Slug
-              </label>
-              <input
-                id="bmCmsBlogSlug"
-                value={blogForm.slug}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG_SLUG(e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="bmCmsBlogKeywords" className={BM_CMS_LABEL}>
-                Keywords / Tags
-              </label>
-              <input
-                id="bmCmsBlogKeywords"
-                value={blogForm.keywords}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG("keywords", e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="bmCmsBlogAuthor" className={BM_CMS_LABEL}>
-                Author
-              </label>
-              <input
-                id="bmCmsBlogAuthor"
-                value={blogForm.author}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG("author", e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              />
-            </div>
-
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="bmCmsBlogDescription"
-                className={BM_CMS_LABEL}
-              >
-                Short Description
-              </label>
-              <textarea
-                id="bmCmsBlogDescription"
-                rows={3}
-                value={blogForm.description || ""}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG("description", e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="bmCmsBlogReadingTime"
-                className={BM_CMS_LABEL}
-              >
-                Estimated Reading Time (minutes)
-              </label>
-              <input
-                id="bmCmsBlogReadingTime"
-                type="number"
-                min="1"
-                value={blogForm.readingTime}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG("readingTime", e.target.value)
-                }
-                placeholder="e.g. 5"
-                className={BM_CMS_INPUT}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="bmCmsBlogStatus" className={BM_CMS_LABEL}>
-                Status
-              </label>
-              <select
-                id="bmCmsBlogStatus"
-                value={blogForm.status}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG("status", e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              >
-                <option>Draft</option>
-                <option>Published</option>
-              </select>
-            </div>
-
-            {/* Featured image upload */}
-            <div className="sm:col-span-2">
-              <label className={BM_CMS_LABEL}>
-                Featured Image / File Upload
-              </label>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <BmCmsBlogThumb
-                  blog={blogForm}
-                  className="h-16 w-24"
-                />
-
-                <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)]">
-                  <Upload size={16} />
-                  {blogForm.imageName || "Choose File"}
-
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={BM_CMS_UPLOAD_BLOG_IMAGE}
-                    className="hidden"
-                  />
-                </label>
-
-                {blogForm.image && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      BM_CMS_CHANGE_BLOG("image", "");
-                      BM_CMS_CHANGE_BLOG("imageName", "");
-                    }}
-                    className="text-xs text-red-600"
-                  >
-                    Remove Image
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Rich text content */}
-            <div className="sm:col-span-2">
-              <label className={BM_CMS_LABEL}>Full Content</label>
-
-              <BmCmsRichTextEditor
-                editorId="bmCmsBlogEditor"
-                value={blogForm.content}
-                onChange={(value) =>
-                  BM_CMS_CHANGE_BLOG("content", value)
-                }
-              />
-            </div>
-
-            <label className="flex items-center gap-2 text-sm text-[color:var(--primary-text)] sm:col-span-2">
-              <input
-                type="checkbox"
-                checked={blogForm.featured}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_BLOG("featured", e.target.checked)
-                }
-                className="h-4 w-4 accent-[var(--primary-yellow)]"
-              />
-              Show in Featured Blogs
-            </label>
-          </div>
-
-          <div className="mt-5 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setBlogModalOpen(false)}
-              className={BM_CMS_BUTTON}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="button"
-              disabled={!blogForm.title.trim() || !blogForm.author.trim()}
-              onClick={BM_CMS_SAVE_BLOG}
-              className={BM_CMS_YELLOW_BUTTON}
-            >
-              {blogEditId === null ? "Save Blog" : "Save Changes"}
-            </button>
-          </div>
-        </BmCmsModal>
-      )}
-
-      {/* BLOG VIEW MODAL */}
-      {blogView && (
-        <BmCmsModal
-          title={blogView.title}
-          onClose={() => setBlogView(null)}
-          size="max-w-3xl"
-        >
-          <div className="flex flex-wrap gap-3 text-xs text-[color:var(--secondary-text)]">
-            <span>{blogView.author}</span>
-            <span>{blogView.date}</span>
-            <span>{blogView.readingTime || "—"} min read</span>
-            <span>{blogView.status}</span>
-          </div>
-
-          <div className="mt-4">
-            <BmCmsBlogThumb
-              blog={blogView}
-              className="h-48 w-full"
-            />
-          </div>
-
-          <div
-            className="prose mt-4 max-w-none text-sm text-[color:var(--primary-text)]"
-            dangerouslySetInnerHTML={{
-              __html: blogView.content || "",
-            }}
-          />
-        </BmCmsModal>
-      )}
-
-      {/* BLOG DELETE MODAL */}
-      {blogDeleteId !== null && (
-        <BmCmsModal
-          title="Delete Blog"
-          onClose={() => setBlogDeleteId(null)}
-        >
-          <p className="text-sm text-[color:var(--secondary-text)]">
-            Are you sure you want to delete this blog?
-          </p>
-
-          <div className="mt-5 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setBlogDeleteId(null)}
-              className={BM_CMS_BUTTON}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="button"
-              onClick={BM_CMS_BLOG_DELETE}
-              className="rounded-md bg-red-600 px-4 py-2 text-sm text-white"
-            >
-              Confirm Delete
-            </button>
-          </div>
-        </BmCmsModal>
-      )}
 
       {/* =====================================================
           TAB 7 — FAQ
@@ -1918,136 +2792,24 @@ export default function BmCmsPage() {
 
           <div className="mt-5 flex flex-col gap-3">
             {faqs.map((faq) => (
-              <div
+              <BmCmsFaqCard
                 key={faq.id}
-                className={`${BM_CMS_CARD} flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between`}
-              >
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-medium text-[color:var(--primary-text)]">
-                    {faq.question}
-                  </h3>
-
-                  <p className="mt-2 whitespace-pre-line text-sm text-[color:var(--secondary-text)]">
-                    {faq.answer || "No answer added yet."}
-                  </p>
-
-                  <span
-                    className={`mt-2 inline-block rounded px-2 py-1 text-xs ${
-                      faq.active
-                        ? "bg-green-50 text-green-700"
-                        : "bg-[var(--off-white-background)] text-[color:var(--secondary-text)]"
-                    }`}
-                  >
-                    {faq.active ? "Active" : "Inactive"}
-                  </span>
-                </div>
-
-                <div className="flex shrink-0 items-center gap-2">
-                  <BmCmsSwitch
-                    checked={faq.active}
-                    onChange={() => BM_CMS_TOGGLE_FAQ(faq.id)}
-                    label={`Toggle ${faq.question}`}
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => BM_CMS_OPEN_EDIT_FAQ(faq)}
-                    className={BM_CMS_ICON_BUTTON}
-                    aria-label="Edit FAQ"
-                  >
-                    <Pencil size={16} />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => BM_CMS_DELETE_FAQ(faq.id)}
-                    className={`${BM_CMS_ICON_BUTTON} text-red-500`}
-                    aria-label="Delete FAQ"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </div>
+                faq={faq}
+                faqModalOpen={faqModalOpen}
+                faqEditId={faqEditId}
+                faqFormProps={faqFormProps}
+                onToggle={BM_CMS_TOGGLE_FAQ}
+                onEdit={BM_CMS_OPEN_EDIT_FAQ}
+                onDelete={BM_CMS_DELETE_FAQ}
+              />
             ))}
           </div>
         </section>
       )}
 
-      {/* ADD / EDIT FAQ MODAL */}
-      {faqModalOpen && (
-        <BmCmsModal
-          title={faqEditId === null ? "Add FAQ" : "Edit FAQ"}
-          onClose={() => setFaqModalOpen(false)}
-        >
-          <div>
-            <label htmlFor="bmCmsFaqQuestion" className={BM_CMS_LABEL}>
-              Question
-            </label>
-            <input
-              id="bmCmsFaqQuestion"
-              value={faqForm.question}
-              onChange={(e) =>
-                setFaqForm((old) => ({
-                  ...old,
-                  question: e.target.value,
-                }))
-              }
-              className={BM_CMS_INPUT}
-            />
-          </div>
-
-          <div className="mt-4">
-            <label htmlFor="bmCmsFaqAnswer" className={BM_CMS_LABEL}>
-              Answer
-            </label>
-            <textarea
-              id="bmCmsFaqAnswer"
-              rows={5}
-              value={faqForm.answer}
-              onChange={(e) =>
-                setFaqForm((old) => ({
-                  ...old,
-                  answer: e.target.value,
-                }))
-              }
-              className={BM_CMS_INPUT}
-            />
-          </div>
-
-          <label className="mt-4 flex items-center gap-2 text-sm text-[color:var(--primary-text)]">
-            <input
-              type="checkbox"
-              checked={faqForm.active}
-              onChange={(e) =>
-                setFaqForm((old) => ({
-                  ...old,
-                  active: e.target.checked,
-                }))
-              }
-              className="h-4 w-4 accent-[var(--primary-yellow)]"
-            />
-            Active
-          </label>
-
-          <div className="mt-5 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setFaqModalOpen(false)}
-              className={BM_CMS_BUTTON}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="button"
-              onClick={BM_CMS_SAVE_FAQ}
-              disabled={!faqForm.question.trim()}
-              className={BM_CMS_YELLOW_BUTTON}
-            >
-              Save FAQ
-            </button>
-          </div>
-        </BmCmsModal>
+      {/* ADD FAQ MODAL (edit modal card ke andar hai) */}
+      {faqModalOpen && faqEditId === null && (
+        <BmCmsFaqFormModal {...faqFormProps} />
       )}
 
       {/* =====================================================
@@ -2174,185 +2936,9 @@ export default function BmCmsPage() {
         </section>
       )}
 
-      {/* =====================================================
-          HERO / BANNER CREATE AND EDIT MODAL
-      ===================================================== */}
-
-      {itemModal && (
-        <BmCmsModal
-          title={`${itemModal.item ? "Edit" : "Create New"} ${
-            BM_CMS_NAMES[itemModal.kind]
-          }`}
-          onClose={() => setItemModal(null)}
-        >
-          <div>
-            <label htmlFor="bmCmsItemTitle" className={BM_CMS_LABEL}>
-              Title / Heading
-            </label>
-            <input
-              id="bmCmsItemTitle"
-              value={itemForm.title}
-              onChange={(e) =>
-                BM_CMS_CHANGE_ITEM("title", e.target.value)
-              }
-              className={BM_CMS_INPUT}
-            />
-          </div>
-
-          <div className="mt-4">
-            <label htmlFor="bmCmsItemDescription" className={BM_CMS_LABEL}>
-              Description / Text
-            </label>
-            <textarea
-              id="bmCmsItemDescription"
-              rows={3}
-              value={itemForm.description}
-              onChange={(e) =>
-                BM_CMS_CHANGE_ITEM("description", e.target.value)
-              }
-              className={BM_CMS_INPUT}
-            />
-          </div>
-
-          <div className="mt-4">
-            <label htmlFor="bmCmsItemImage" className={BM_CMS_LABEL}>
-              Image File Upload
-            </label>
-            <input
-              id="bmCmsItemImage"
-              type="file"
-              accept="image/*"
-              onChange={BM_CMS_UPLOAD_ITEM_IMAGE}
-              className="block w-full text-sm text-[color:var(--primary-text)]"
-            />
-
-            {itemForm.image && (
-              <div className="relative mt-3 h-24 w-40 overflow-hidden rounded-md">
-                <BmCmsImage src={itemForm.image} alt="Selected image" />
-              </div>
-            )}
-          </div>
-
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label htmlFor="bmCmsItemButtonText" className={BM_CMS_LABEL}>
-                Button Text
-              </label>
-              <input
-                id="bmCmsItemButtonText"
-                value={itemForm.buttonText}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_ITEM("buttonText", e.target.value)
-                }
-                className={BM_CMS_INPUT}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="bmCmsItemButtonLink" className={BM_CMS_LABEL}>
-                Button Link
-              </label>
-              <input
-                id="bmCmsItemButtonLink"
-                value={itemForm.buttonLink}
-                onChange={(e) =>
-                  BM_CMS_CHANGE_ITEM("buttonLink", e.target.value)
-                }
-                placeholder="/materials"
-                className={BM_CMS_INPUT}
-              />
-            </div>
-          </div>
-
-          <label className="mt-4 flex items-center gap-2 text-sm text-[color:var(--primary-text)]">
-            <BmCmsSwitch
-              checked={itemForm.active}
-              onChange={() =>
-                BM_CMS_CHANGE_ITEM("active", !itemForm.active)
-              }
-              label="Active"
-            />
-            Active
-          </label>
-
-          <div className="mt-5 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setItemModal(null)}
-              className={BM_CMS_BUTTON}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="button"
-              onClick={BM_CMS_SAVE_ITEM}
-              disabled={!itemForm.title.trim()}
-              className={BM_CMS_YELLOW_BUTTON}
-            >
-              Save {BM_CMS_NAMES[itemModal.kind]}
-            </button>
-          </div>
-        </BmCmsModal>
-      )}
-
-      {/* HERO / BANNER PREVIEW MODAL */}
-      {itemPreview && (
-        <BmCmsModal
-          title="Preview"
-          onClose={() => setItemPreview(null)}
-        >
-          <div className="relative aspect-video overflow-hidden rounded-md bg-[var(--off-white-background)]">
-            {itemPreview.image && (
-              <BmCmsImage
-                src={itemPreview.image}
-                alt={itemPreview.title}
-              />
-            )}
-          </div>
-
-          <h3 className="mt-3 font-semibold text-[color:var(--primary-text)]">
-            {itemPreview.title}
-          </h3>
-
-          <p className="mt-1 text-sm text-[color:var(--secondary-text)]">
-            {itemPreview.description}
-          </p>
-
-          <p className="mt-2 text-xs text-[color:var(--secondary-text)]">
-            {itemPreview.active ? "Active" : "Inactive"}
-          </p>
-        </BmCmsModal>
-      )}
-
-      {/* HERO / BANNER DELETE MODAL */}
-      {itemDelete && (
-        <BmCmsModal
-          title={`Delete ${BM_CMS_NAMES[itemDelete.kind]}?`}
-          onClose={() => setItemDelete(null)}
-        >
-          <p className="text-sm text-[color:var(--secondary-text)]">
-            Delete "{itemDelete.item.title}". This cannot be undone.
-          </p>
-
-          <div className="mt-5 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setItemDelete(null)}
-              className={BM_CMS_BUTTON}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="button"
-              onClick={BM_CMS_DELETE_ITEM}
-              className="rounded-md bg-red-600 px-4 py-2 text-sm text-white"
-            >
-              Confirm Delete
-            </button>
-          </div>
-        </BmCmsModal>
+      {/* ADD HERO / BANNER MODAL (edit, preview, delete row ke andar hain) */}
+      {itemModal && !itemModal.item && (
+        <BmCmsItemFormModal {...itemFormProps} />
       )}
 
       {/* TOAST */}
