@@ -1,296 +1,317 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Wallet, CircleArrowDown, CircleArrowUp, Upload, X } from "lucide-react";
+import {
+  ArrowDownToLine,
+  ArrowUpFromLine,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Plus,
+  Upload,
+  Wallet,
+  X,
+} from "lucide-react";
+import BmSupplierNotificationPageheader from "../../../component/supplier/pageheader/BmSupplierNotificationPageheader.js";
+import BmSupplierWalletDataRow from "../../../component/supplier/wallet/BmSupplierWalletDataRow.js";
 
-/* ---------------- Datasets ---------------- */
+/* =========================================================
+   TEMPORARY DATA — baad mein API se aayega
+========================================================= */
 
-const initialTransactions = [
-  { id: "T-501", type: "Top-Up", details: "Bank transfer — approved by Admin", date: "2026-10-01", amount: 5000, status: "Approved", reference: "Not provided", receipt: "" },
-  { id: "T-502", type: "Platform Fee", details: "Order BM-ORD-1003", date: "2026-10-11", amount: -100, status: "Approved", reference: "Not provided", receipt: "" },
-  { id: "T-503", type: "Platform Fee", details: "Order BM-ORD-1001", date: "2026-10-15", amount: -100, status: "Approved", reference: "Not provided", receipt: "" },
-  { id: "T-504", type: "Top-Up", details: "JazzCash — awaiting Admin approval", date: "2026-10-17", amount: 2000, status: "Pending", reference: "Not provided", receipt: "" },
+// Stats cards — backend se connect hoga
+const BM_WALLET_STATS = [
+  { label: "Available demo wallet balance", value: "Rs. 4,800", icon: Wallet, highlight: true },
+  { label: "Pending top-up requests", value: "1", icon: Clock },
+  { label: "Approved top-ups", value: "Rs. 5,000", icon: ArrowDownToLine },
+  { label: "Platform fees", value: "Rs. 200", icon: ArrowUpFromLine },
 ];
 
-// Payment methods Admin ki taraf se aate hain (demo data)
-const paymentMethods = [
-  {
-    name: "Bank Transfer",
-    info: [
-      { label: "Bank name", value: "DEMO BANK — not a real account" },
-      { label: "Account title", value: "BuildMart Demo" },
-      { label: "Account / IBAN", value: "DEMO-ACCOUNT-ONLY" },
-      { label: "Instructions", value: "Simulated payment receipt only; do not send money." },
-    ],
-  },
-  {
-    name: "JazzCash",
-    info: [
-      { label: "Account title", value: "BuildMart Demo" },
-      { label: "Mobile number", value: "03XX-XXXXXXX (demo)" },
-      { label: "Instructions", value: "Simulated payment receipt only; do not send money." },
-    ],
-  },
-  {
-    name: "Easypaisa",
-    info: [
-      { label: "Account title", value: "BuildMart Demo" },
-      { label: "Mobile number", value: "03XX-XXXXXXX (demo)" },
-      { label: "Instructions", value: "Simulated payment receipt only; do not send money." },
-    ],
-  },
+const BM_TRANSACTIONS = [
+  { id: "T-501", type: "Top-Up", details: "Bank transfer — approved by Admin", date: "2026-10-01", amount: 5000, status: "Approved", reference: "", receiptName: "receipt_T-501.pdf", receiptUrl: "/documents/receipt_T-501.pdf" },
+  { id: "T-502", type: "Platform Fee", details: "Order BM-ORD-1003", date: "2026-10-11", amount: -100, status: "Approved", reference: "", receiptName: "", receiptUrl: "" },
+  { id: "T-503", type: "Platform Fee", details: "Order BM-ORD-1001", date: "2026-10-15", amount: -100, status: "Approved", reference: "", receiptName: "", receiptUrl: "" },
+  { id: "T-504", type: "Top-Up", details: "JazzCash — awaiting Admin approval", date: "2026-10-17", amount: 2000, status: "Pending", reference: "JC-88231", receiptName: "receipt_T-504.png", receiptUrl: "/documents/receipt_T-504.png" },
+  { id: "T-505", type: "Top-Up", details: "Easypaisa — rejected by Admin", date: "2026-10-18", amount: 1500, status: "Rejected", reference: "EP-55102", receiptName: "receipt_T-505.jpg", receiptUrl: "/documents/receipt_T-505.jpg" },
+  { id: "T-506", type: "Top-Up", details: "Bank transfer — rejected by Admin", date: "2026-10-19", amount: 1000, status: "Rejected", reference: "", receiptName: "", receiptUrl: "" },
 ];
 
-const headings = ["TXN ID", "Type", "Details", "Date", "Amount", "Status", ""];
+const BM_PAYMENT_METHODS = ["Bank Transfer", "JazzCash", "Easypaisa"];
 
-/* ---------------- Shared styles + helpers ---------------- */
-
-const badgeColors = {
-  Approved: "bg-green-50 text-green-700",
-  Pending: "bg-orange-50 text-orange-600",
+// Payment method ke hisaab se demo account info
+const BM_PAYMENT_INFO = {
+  "Bank Transfer": [
+    ["Bank name", "DEMO BANK — not a real account"],
+    ["Account title", "BuildMart Demo"],
+    ["Account / IBAN", "DEMO-ACCOUNT-ONLY"],
+    ["Instructions", "Simulated payment receipt only; do not send money."],
+  ],
+  JazzCash: [
+    ["Wallet name", "DEMO JAZZCASH — not a real account"],
+    ["Account title", "BuildMart Demo"],
+    ["Mobile number", "DEMO-0300-0000000"],
+    ["Instructions", "Simulated payment receipt only; do not send money."],
+  ],
+  Easypaisa: [
+    ["Wallet name", "DEMO EASYPAISA — not a real account"],
+    ["Account title", "BuildMart Demo"],
+    ["Mobile number", "DEMO-0300-0000000"],
+    ["Instructions", "Simulated payment receipt only; do not send money."],
+  ],
 };
 
-const field =
-  "mt-1.5 w-full rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)] outline-none focus:border-[var(--primary-yellow)] focus:ring-2 focus:ring-[var(--primary-yellow)]/40";
+const BM_EMPTY_FORM = { amount: "1000", method: "Bank Transfer", reference: "", fileName: "" };
 
-const rs = (n) => `Rs. ${n.toLocaleString("en-US")}`;
+const th = "px-4 py-3 font-medium";
+const fieldClass =
+  "mt-2 w-full rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2.5 text-sm text-[color:var(--primary-text)] outline-none focus:border-[var(--primary-yellow)] focus:ring-2 focus:ring-[var(--primary-yellow)]/40";
+const labelClass = "block text-sm text-[color:var(--primary-text)]";
 
-const Badge = ({ text }) => (
-  <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs ${badgeColors[text]}`}>{text}</span>
-);
+/* =========================================================
+   PAGE
+========================================================= */
 
-// Overlay + heading + close icon
-const ModalShell = ({ title, onClose, children }) => (
-  <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-4">
-    <div onClick={(e) => e.stopPropagation()} className="my-auto w-full max-w-lg rounded-xl bg-[var(--white-cards)] p-5 shadow-xl sm:p-6">
-      <div className="flex items-start justify-between gap-3 border-b border-[color:var(--border-color)] pb-3">
-        <h2 className="text-lg font-semibold text-[color:var(--primary-text)]">{title}</h2>
-        <button type="button" aria-label="Close" onClick={onClose} className="text-[color:var(--secondary-text)] hover:text-[color:var(--primary-text)]">
-          <X size={18} />
-        </button>
-      </div>
-      {children}
-    </div>
-  </div>
-);
+const Page = () => {
+  const [topupOpen, setTopupOpen] = useState(false);
+  const [form, setForm] = useState(BM_EMPTY_FORM);
 
-/* ---------------- Stat cards grid ---------------- */
+  const handleChange = (key, value) =>
+    setForm((old) => ({ ...old, [key]: value }));
 
-const StatCards = ({ items }) => (
-  <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-    {items.map((s) => (
-      <div
-        key={s.title}
-        className={`flex items-center gap-4 rounded-xl border p-4 shadow-sm ${
-          s.highlight ? "border-[var(--primary-yellow)] bg-[var(--primary-yellow)]" : "border-[color:var(--border-color)] bg-[var(--white-cards)]"
-        }`}
-      >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--primary-yellow)]/30 text-[color:var(--charcoal-black)]">
-          <s.icon size={22} />
-        </span>
-        <div className="min-w-0">
-          <p className="text-xs uppercase text-[color:var(--primary-text)]">{s.title}</p>
-          <p className="text-2xl font-bold text-[color:var(--charcoal-black)]">{s.value}</p>
-        </div>
-      </div>
-    ))}
-  </div>
-);
-
-/* ---------------- Transactions table ---------------- */
-
-const TransactionsTable = ({ items, onView }) => (
-  <div className="mt-4 overflow-x-auto rounded-xl border border-[color:var(--border-color)] bg-[var(--white-cards)] shadow-sm">
-    <table className="w-full min-w-[800px] text-left text-sm">
-      <thead className="text-xs uppercase text-[color:var(--secondary-text)]">
-        <tr>
-          {headings.map((h, i) => (
-            <th key={i} className="px-4 py-3 font-medium">{h}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((t) => (
-          <tr key={t.id} className="border-t border-[color:var(--border-color)]">
-            <td className="px-4 py-4 text-[color:var(--primary-text)]">{t.id}</td>
-            <td className="px-4 py-4 text-[color:var(--primary-text)]">{t.type}</td>
-            <td className="px-4 py-4 text-[color:var(--primary-text)]">{t.details}</td>
-            <td className="px-4 py-4 text-[color:var(--primary-text)]">{t.date}</td>
-            <td className="px-4 py-4 font-semibold text-[color:var(--primary-text)]">{rs(t.amount)}</td>
-            <td className="px-4 py-4"><Badge text={t.status} /></td>
-            <td className="px-4 py-4">
-              <button
-                type="button"
-                onClick={() => onView(t.id)}
-                className="rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-1 text-xs text-[color:var(--primary-text)] shadow-sm hover:bg-[var(--off-white-background)]"
-              >
-                View
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
-
-/* ---------------- Page ---------------- */
-
-const SupplierWalletPage = () => {
-  const [transactions, setTransactions] = useState(initialTransactions);
-  const [viewId, setViewId] = useState(null);
-  const [topUpOpen, setTopUpOpen] = useState(false);
-
-  // Top-Up form
-  const [amount, setAmount] = useState("1000");
-  const [method, setMethod] = useState("Bank Transfer");
-  const [reference, setReference] = useState("");
-  const [receipt, setReceipt] = useState("");
-
-  const handleOpenTopUp = () => {
-    setAmount("1000");
-    setMethod("Bank Transfer");
-    setReference("");
-    setReceipt("");
-    setTopUpOpen(true);
+  const handleCloseTopup = () => {
+    setTopupOpen(false);
+    setForm(BM_EMPTY_FORM);
   };
 
-  // Submit tabhi chale jab amount, reference aur receipt teeno hon
-  const canSubmit = Number(amount) > 0 && reference.trim() !== "" && receipt !== "";
-
-  const handleSubmit = () => {
-    if (!canSubmit) return;
-    const next = {
-      id: `T-${505 + transactions.length - 4}`,
-      type: "Top-Up",
-      details: `${method} — awaiting Admin approval`,
-      date: new Date().toISOString().slice(0, 10),
-      amount: Number(amount),
-      status: "Pending",
-      reference: reference.trim(),
-      receipt,
-    };
-    setTransactions([...transactions, next]);
-    setTopUpOpen(false);
+  const handleSubmitRequest = () => {
+    alert(`Top-up request of Rs. ${form.amount} via ${form.method} submitted (demo)`);
+    handleCloseTopup();
   };
-
-  // Totals transactions se nikaalo
-  const sum = (kind, status) =>
-    transactions.reduce((n, t) => (t.type === kind && t.status === status ? n + t.amount : n), 0);
-  const approvedTopUps = sum("Top-Up", "Approved");
-  const fees = -sum("Platform Fee", "Approved");
-  const pendingCount = transactions.reduce((n, t) => (t.status === "Pending" ? n + 1 : n), 0);
-
-  const stats = [
-    { title: "Available demo wallet balance", value: rs(approvedTopUps - fees), icon: Wallet, highlight: true },
-    { title: "Pending top-up requests", value: pendingCount, icon: Wallet },
-    { title: "Approved top-ups", value: rs(approvedTopUps), icon: CircleArrowDown },
-    { title: "Platform fees", value: rs(fees), icon: CircleArrowUp },
-  ];
-
-  const viewing = transactions.find((t) => t.id === viewId);
-  const selected = paymentMethods.find((m) => m.name === method);
 
   return (
-    <section className="p-4 sm:p-6 lg:p-8">
-      {/* Heading + button */}
+    <main className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">
+      {/* HEADER + TOP-UP REQUEST BUTTON (button page.js mein hai) */}
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h1 className="text-3xl leading-tight text-[color:var(--primary-text)] sm:text-4xl"> Wallet</h1>
-          <p className="mt-1 text-sm text-[color:var(--secondary-text)]">Demo wallet — no real money transfer</p>
-        </div>
+        <BmSupplierNotificationPageheader
+          title="Wallet"
+          description="Demo wallet — no real money transfer"
+        />
+
         <button
           type="button"
-          onClick={handleOpenTopUp}
-          className="flex items-center gap-2 rounded-md bg-[var(--primary-yellow)] px-4 py-2 text-sm text-[color:var(--charcoal-black)] hover:bg-[var(--hover-yellow)]"
+          onClick={() => setTopupOpen(true)}
+          className="inline-flex items-center gap-2 rounded-md bg-[var(--primary-yellow)] px-4 py-2 text-sm text-[color:var(--charcoal-black)] hover:bg-[var(--hover-yellow)]"
         >
-          <Plus size={16} /> Top-Up Request
+          <Plus size={15} />
+          Top-Up Request
         </button>
       </div>
 
-      <StatCards items={stats} />
+      {/* STATS */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {BM_WALLET_STATS.map(({ label, value, icon: Icon, highlight }) => (
+          <div
+            key={label}
+            className={`flex items-center gap-3 rounded-xl border p-4 shadow-sm ${
+              highlight
+                ? "border-[var(--primary-yellow)] bg-[var(--primary-yellow)] text-[color:var(--charcoal-black)]"
+                : "border-[color:var(--border-color)] bg-[var(--white-cards)] text-[color:var(--primary-text)]"
+            }`}
+          >
+            <span
+              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${
+                highlight ? "bg-black/10" : "bg-[var(--primary-yellow)]/25"
+              }`}
+            >
+              <Icon size={18} />
+            </span>
 
-      <p className="mt-5 border-l-4 border-[var(--primary-yellow)] pl-4 text-sm text-[color:var(--primary-text)]">
-        Example minimum balance: Rs. 1,000 · Example platform fee: Rs. 100 per order. Pending requests do not increase balance. No automatic penalties or deductions.
+            <div>
+              <p className="text-[11px] uppercase">{label}</p>
+              <p className="text-2xl font-semibold">{value}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* NOTE */}
+      <p className="mt-4 border-l-4 border-[var(--primary-yellow)] pl-3 text-sm text-[color:var(--primary-text)]">
+        Example minimum balance: Rs. 1,000 · Example platform fee: Rs. 100 per
+        order. Pending requests do not increase balance. No automatic penalties
+        or deductions.
       </p>
 
-      <div className="mt-5">
-        <TransactionsTable items={transactions} onView={setViewId} />
-      </div>
+      {/* TABLE CARD */}
+      <div className="mt-4 rounded-xl border border-[color:var(--border-color)] bg-[var(--white-cards)] shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[850px] text-left">
+            <thead className="text-[11px] uppercase text-[color:var(--secondary-text)]">
+              <tr>
+                <th className={th}>Txn ID</th>
+                <th className={th}>Type</th>
+                <th className={th}>Details</th>
+                <th className={th}>Date</th>
+                <th className={th}>Amount</th>
+                <th className={th}>Status</th>
+                <th className={th}></th>
+              </tr>
+            </thead>
 
-      <div className="mt-8 border-t border-[color:var(--border-color)] pt-6">
-        <h2 className="text-lg font-semibold text-[color:var(--primary-text)]">Refunds / Returns</h2>
-        <p className="mt-2 text-sm text-[color:var(--secondary-text)]">No refunds or returns yet.</p>
-      </div>
+            <tbody>
+              {BM_TRANSACTIONS.map((transaction) => (
+                <BmSupplierWalletDataRow
+                  key={transaction.id}
+                  transaction={transaction}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* ---------- Top-Up Request modal (form) ---------- */}
-      {topUpOpen && (
-        <ModalShell title="Top-Up Request" onClose={() => setTopUpOpen(false)}>
-          <label htmlFor="bmTopAmount" className="mt-4 block text-sm text-[color:var(--primary-text)]">Amount (Rs.)</label>
-          <input id="bmTopAmount" type="number" min="1" value={amount} onChange={(e) => setAmount(e.target.value)} className={field} />
+        {/* PAGINATION (abhi kuch implement nahi) */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[color:var(--border-color)] px-4 py-3 text-xs text-[color:var(--secondary-text)]">
+          <span>{BM_TRANSACTIONS.length} records</span>
 
-          <label htmlFor="bmTopMethod" className="mt-4 block text-sm text-[color:var(--primary-text)]">Payment Method</label>
-          <select id="bmTopMethod" value={method} onChange={(e) => setMethod(e.target.value)} className={field}>
-            {paymentMethods.map((m) => (
-              <option key={m.name}>{m.name}</option>
-            ))}
-          </select>
-
-          {/* Selected method ki details */}
-          <div className="mt-4 flex flex-col gap-3 border-y border-[color:var(--border-color)] py-4 text-sm">
-            {selected.info.map((i) => (
-              <div key={i.label}>
-                <p className="text-xs text-[color:var(--secondary-text)]">{i.label}</p>
-                <p className="text-[color:var(--primary-text)]">{i.value}</p>
-              </div>
-            ))}
+          <div className="flex items-center gap-2">
+            <button type="button" aria-label="Previous page" className="rounded p-1 hover:bg-[var(--off-white-background)]">
+              <ChevronLeft size={14} />
+            </button>
+            <span>Page 1 / 1</span>
+            <button type="button" aria-label="Next page" className="rounded p-1 hover:bg-[var(--off-white-background)]">
+              <ChevronRight size={14} />
+            </button>
           </div>
+        </div>
+      </div>
 
-          <label htmlFor="bmTopRef" className="mt-4 block text-sm text-[color:var(--primary-text)]">Transaction ID / Reference *</label>
-          <input id="bmTopRef" type="text" value={reference} onChange={(e) => setReference(e.target.value)} className={field} />
+      {/* REFUNDS / RETURNS */}
+      <div className="mt-8 border-t border-[color:var(--border-color)] pt-6">
+        <h2 className="font-semibold text-[color:var(--primary-text)]">
+          Refunds / Returns
+        </h2>
+        <p className="mt-3 text-sm text-[color:var(--secondary-text)]">
+          No refunds or returns yet.
+        </p>
+      </div>
 
-          <p className="mt-4 text-sm text-[color:var(--primary-text)]">Payment receipt *</p>
-          <label className="mt-1.5 inline-flex cursor-pointer items-center gap-2 rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)] shadow-sm hover:bg-[var(--off-white-background)]">
-            <Upload size={16} /> {receipt || "Upload File"}
-            <input
-              type="file"
-              accept="image/*,.pdf"
-              aria-label="Payment receipt"
-              onChange={(e) => setReceipt(e.target.files[0] ? e.target.files[0].name : "")}
-              className="hidden"
-            />
-          </label>
+      {/* TOP-UP REQUEST MODAL */}
+      {topupOpen && (
+        <div
+          onClick={handleCloseTopup}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[94vh] w-full max-w-lg overflow-y-auto rounded-xl bg-[var(--white-cards)] p-5 shadow-xl sm:p-6"
+          >
+            <div className="flex items-start justify-between gap-3 border-b border-[color:var(--border-color)] pb-3">
+              <h2 className="text-lg font-semibold text-[color:var(--primary-text)]">
+                Top-Up Request
+              </h2>
+              <button
+                type="button"
+                onClick={handleCloseTopup}
+                aria-label="Close modal"
+                className="rounded-md p-1 text-[color:var(--secondary-text)] hover:bg-[var(--off-white-background)]"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-          <div className="mt-5">
+            <div className="mt-4">
+              <label htmlFor="bm-topup-amount" className={labelClass}>
+                Amount (Rs.)
+              </label>
+              <input
+                id="bm-topup-amount"
+                type="number"
+                value={form.amount}
+                onChange={(e) => handleChange("amount", e.target.value)}
+                className={fieldClass}
+              />
+            </div>
+
+            <div className="mt-4">
+              <label htmlFor="bm-topup-method" className={labelClass}>
+                Payment Method
+              </label>
+              <select
+                id="bm-topup-method"
+                value={form.method}
+                onChange={(e) => handleChange("method", e.target.value)}
+                className={fieldClass}
+              >
+                {BM_PAYMENT_METHODS.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Demo account info — method ke hisaab se */}
+            <div className="mt-4 space-y-3 border-y border-[color:var(--border-color)] py-4">
+              {BM_PAYMENT_INFO[form.method].map(([label, value]) => (
+                <div key={label}>
+                  <p className="text-xs text-[color:var(--secondary-text)]">
+                    {label}
+                  </p>
+                  <p className="text-sm text-[color:var(--primary-text)]">
+                    {value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4">
+              <label htmlFor="bm-topup-reference" className={labelClass}>
+                Transaction ID / Reference *
+              </label>
+              <input
+                id="bm-topup-reference"
+                value={form.reference}
+                onChange={(e) => handleChange("reference", e.target.value)}
+                className={fieldClass}
+              />
+            </div>
+
+            <div className="mt-4">
+              <p className={labelClass}>Payment receipt *</p>
+
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-[color:var(--border-color)] bg-[var(--white-cards)] px-3 py-2 text-sm text-[color:var(--primary-text)] hover:bg-[var(--off-white-background)]">
+                  <Upload size={15} />
+                  Upload File
+                  <input
+                    type="file"
+                    accept="image/*,application/pdf"
+                    onChange={(e) =>
+                      handleChange("fileName", e.target.files?.[0]?.name || "")
+                    }
+                    className="hidden"
+                  />
+                </label>
+
+                {form.fileName && (
+                  <span className="truncate text-xs text-[color:var(--secondary-text)]">
+                    {form.fileName}
+                  </span>
+                )}
+              </div>
+            </div>
+
             <button
               type="button"
-              disabled={!canSubmit}
-              onClick={handleSubmit}
-              className="rounded-md bg-[var(--primary-yellow)] px-4 py-2 text-sm text-[color:var(--charcoal-black)] hover:bg-[var(--hover-yellow)] disabled:cursor-not-allowed disabled:opacity-50"
+              onClick={handleSubmitRequest}
+              className="mt-5 rounded-md bg-[var(--primary-yellow)] px-4 py-2 text-sm text-[color:var(--charcoal-black)] hover:bg-[var(--hover-yellow)]"
             >
               Submit Request
             </button>
           </div>
-        </ModalShell>
+        </div>
       )}
-
-      {/* ---------- View modal ---------- */}
-      {viewing && (
-        <ModalShell title="Transaction Details" onClose={() => setViewId(null)}>
-          <div className="mt-4 flex flex-col gap-3 text-sm text-[color:var(--primary-text)]">
-            <p>{viewing.id} · {viewing.type}</p>
-            <div>
-              <p className="font-semibold">{rs(viewing.amount)}</p>
-              <p>{viewing.details}</p>
-            </div>
-            <p>Reference: {viewing.reference}</p>
-            <div><Badge text={viewing.status} /></div>
-            <p>Receipt{viewing.receipt ? `: ${viewing.receipt}` : ""}</p>
-          </div>
-        </ModalShell>
-      )}
-    </section>
+    </main>
   );
 };
 
-export default SupplierWalletPage;
+export default Page;

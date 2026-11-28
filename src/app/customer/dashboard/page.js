@@ -1,3 +1,6 @@
+
+
+
 // import Image from "next/image";
 // import Link from "next/link";
 // import {
@@ -25,13 +28,14 @@
 //    DEMO DATA (sab numbers, naam aur amounts sirf UI ke liye hain)
 //    ============================================================ */
 
+// // href na ho to card sirf dikhta hai (cart page abhi bana nahi)
 // const stats = [
-//   { id: 1, label: "Total Orders", value: 12, icon: ShoppingBag },
-//   { id: 2, label: "Active Orders", value: 3, icon: Clock },
+//   { id: 1, label: "Total Orders", value: 12, icon: ShoppingBag, href: "/customer/orders" },
+//   { id: 2, label: "Active Orders", value: 3, icon: Clock, href: "/customer/orders" },
 //   { id: 3, label: "Cart Items", value: 5, icon: ShoppingCart },
-//   { id: 4, label: "Favourite Items", value: 8, icon: Heart },
-//   { id: 5, label: "My Reused Listings", value: 4, icon: Recycle },
-//   { id: 6, label: "Buyer Inquiries", value: 2, icon: MessageSquare },
+//   { id: 4, label: "Favourite Items", value: 8, icon: Heart, href: "/customer/favourites" },
+//   { id: 5, label: "My Reused Listings", value: 4, icon: Recycle, href: "/customer/used-materials" },
+//   { id: 6, label: "Buyer Inquiries", value: 2, icon: MessageSquare, href: "/customer/inquiries" },
 // ];
 
 // // href null = page abhi bana nahi (button banta hai, 404 nahi aata)
@@ -39,7 +43,7 @@
 //   { id: 1, label: "Browse materials", href: "/materials", icon: Package },
 //   { id: 2, label: "Estimate costs", href: null, icon: Calculator },
 //   { id: 3, label: "Contact a supplier", href: "/suppliers", icon: MessageSquare },
-//   { id: 4, label: "Sell used materials", href: null, icon: Recycle },
+//   { id: 4, label: "Sell used materials", href: "/customer/used-materials", icon: Recycle },
 // ];
 
 // const orders = [
@@ -55,9 +59,9 @@
 //   { id: 3, supplier: "Zahid Construction Materials", detail: "Steel rates shared", time: "2 days ago", unread: false },
 // ];
 
-// const activities = [
-//   { id: 1, text: "Added 2 items to cart", time: "2 hours ago", icon: ShoppingCart },
-// ];
+// // const activities = [
+// //   { id: 1, text: "Added 2 items to cart", time: "2 hours ago", icon: ShoppingCart },
+// // ];
 
 // const statusClass = {
 //   Delivered: "bg-green-50 text-green-700",
@@ -67,6 +71,7 @@
 
 // const panel = "overflow-hidden rounded-xl border border-[#E2E4E7] bg-white shadow-sm";
 // const viewAll = "flex items-center gap-1 pr-4 text-xs font-semibold text-[#E5B20F] sm:text-sm";
+// const rowLink = "transition-colors hover:bg-[#F4F4F2]";
 
 // /* ============================================================
 //    PAGE
@@ -82,12 +87,12 @@
 //       </div>
 
 //       <Link
-//   href="/customer/used-materials"
-//   className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FDC716] px-5 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#292929]"
-// >
-//   <CloudUpload size={18} aria-hidden="true" />
-//   Upload Reused Material
-// </Link>
+//         href="/customer/used-materials"
+//         className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FDC716] px-5 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#292929]"
+//       >
+//         <CloudUpload size={18} aria-hidden="true" />
+//         Upload Reused Material
+//       </Link>
 //     </div>
 
 //     {/* Stat cards */}
@@ -135,26 +140,28 @@
 //             </span>
 //             Recent Orders
 //           </h2>
-//           <span className={viewAll}>
+//           <Link href="/customer/orders" className={viewAll}>
 //             View All <ArrowRight size={14} aria-hidden="true" />
-//           </span>
+//           </Link>
 //         </div>
 
 //         <ul className="divide-y divide-[#E2E4E7]">
 //           {orders.map(({ id, code, item, date, status, amount, image }) => (
-//             <li key={id} className="flex flex-wrap items-center gap-3 px-4 py-3 sm:flex-nowrap">
-//               <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded-md bg-[#E2E4E7]">
-//                 <Image src={image} alt={`${item} (demo image)`} fill sizes="56px" className="object-cover" />
-//               </div>
-//               <div className="min-w-0 flex-1">
-//                 <p className="truncate text-sm font-semibold text-[#202124]">Order #{code}</p>
-//                 <p className="truncate text-xs text-[#45484D]">
-//                   {item} · {date}
-//                 </p>
-//               </div>
-//               <span className={`rounded-full px-3 py-1 text-xs font-medium ${statusClass[status]}`}>{status}</span>
-//               <p className="w-24 text-right text-sm font-bold text-[#202124]">{amount}</p>
-//               <ChevronRight size={16} className="hidden shrink-0 text-[#A7ADB4] sm:block" aria-hidden="true" />
+//             <li key={id}>
+//               <Link href={`/customer/orders/${code}`} className={`flex flex-wrap items-center gap-3 px-4 py-3 sm:flex-nowrap ${rowLink}`}>
+//                 <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded-md bg-[#E2E4E7]">
+//                   <Image src={image} alt={`${item} (demo image)`} fill sizes="56px" className="object-cover" />
+//                 </div>
+//                 <div className="min-w-0 flex-1">
+//                   <p className="truncate text-sm font-semibold text-[#202124]">Order #{code}</p>
+//                   <p className="truncate text-xs text-[#45484D]">
+//                     {item} · {date}
+//                   </p>
+//                 </div>
+//                 <span className={`rounded-full px-3 py-1 text-xs font-medium ${statusClass[status]}`}>{status}</span>
+//                 <p className="w-24 text-right text-sm font-bold text-[#202124]">{amount}</p>
+//                 <ChevronRight size={16} className="hidden shrink-0 text-[#A7ADB4] sm:block" aria-hidden="true" />
+//               </Link>
 //             </li>
 //           ))}
 //         </ul>
@@ -169,23 +176,25 @@
 //             </span>
 //             Recent Notifications
 //           </h2>
-//           <span className={viewAll}>
+//           <Link href="/customer/notifications" className={viewAll}>
 //             View All <ArrowRight size={14} aria-hidden="true" />
-//           </span>
+//           </Link>
 //         </div>
 
 //         <ul className="divide-y divide-[#E2E4E7]">
 //           {notifications.map(({ id, supplier, detail, time, unread }) => (
-//             <li key={id} className="flex items-start gap-3 px-4 py-3">
-//               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-//                 <MessageSquare size={18} aria-hidden="true" />
-//               </span>
-//               <div className="min-w-0 flex-1">
-//                 <p className="text-sm font-semibold text-[#202124]">{supplier} replied to your inquiry</p>
-//                 <p className="text-xs text-[#45484D]">{detail}</p>
-//                 <p className="mt-0.5 text-xs text-[#A7ADB4]">{time}</p>
-//               </div>
-//               {unread && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#FDC716]" aria-label="Unread" />}
+//             <li key={id}>
+//               <Link href="/customer/inquiries" className={`flex items-start gap-3 px-4 py-3 ${rowLink}`}>
+//                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+//                   <MessageSquare size={18} aria-hidden="true" />
+//                 </span>
+//                 <div className="min-w-0 flex-1">
+//                   <p className="text-sm font-semibold text-[#202124]">{supplier} replied to your inquiry</p>
+//                   <p className="text-xs text-[#45484D]">{detail}</p>
+//                   <p className="mt-0.5 text-xs text-[#A7ADB4]">{time}</p>
+//                 </div>
+//                 {unread && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#FDC716]" aria-label="Unread" />}
+//               </Link>
 //             </li>
 //           ))}
 //         </ul>
@@ -193,7 +202,7 @@
 //     </div>
 
 //     {/* Recent Activity */}
-//     <section className={`${panel} mt-4`}>
+//     {/* <section className={`${panel} mt-4`}>
 //       <div className="flex items-center justify-between border-b border-[#E2E4E7]">
 //         <h2 className="flex items-center gap-3 text-base font-bold text-[#202124] sm:text-lg">
 //           <span className="flex h-12 w-12 items-center justify-center rounded-br-xl bg-[#FDC716] text-[#202124]">
@@ -220,7 +229,7 @@
 //           </li>
 //         ))}
 //       </ul>
-//     </section>
+//     </section> */}
 //   </main>
 // );
 
@@ -229,26 +238,9 @@
 
 
 
-
-
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Activity,
-  ArrowRight,
-  Bell,
-  Calculator,
-  ChevronRight,
-  Clock,
-  CloudUpload,
-  Heart,
-  MessageSquare,
-  Package,
-  Recycle,
-  ShoppingBag,
-  ShoppingCart,
-} from "lucide-react";
-import BmCustomerStatCard from "../../../component/customer/BmCustomerStatCard/BmCustomerStatCard";
+import { ArrowRight, Bell, Calculator, Clock, CloudUpload, Heart, MessageSquare, Package, Recycle, ShoppingBag, ShoppingCart } from "lucide-react";
 
 import steelSaria from "../../../assets/images/guest/card/steelSaria.jpg";
 import bricks from "../../../assets/images/guest/card/briks.jpg";
@@ -289,178 +281,167 @@ const notifications = [
   { id: 3, supplier: "Zahid Construction Materials", detail: "Steel rates shared", time: "2 days ago", unread: false },
 ];
 
-// const activities = [
-//   { id: 1, text: "Added 2 items to cart", time: "2 hours ago", icon: ShoppingCart },
-// ];
-
 const statusClass = {
-  Delivered: "bg-green-50 text-green-700",
-  Processing: "bg-blue-50 text-blue-700",
-  Shipped: "bg-[#FDC716]/25 text-[#202124]",
+  Delivered: "border-green-300 bg-green-50 text-green-600",
+  Processing: "border-blue-300 bg-blue-50 text-blue-600",
+  Shipped: "border-orange-300 bg-orange-50 text-orange-500",
 };
 
-const panel = "overflow-hidden rounded-xl border border-[#E2E4E7] bg-white shadow-sm";
-const viewAll = "flex items-center gap-1 pr-4 text-xs font-semibold text-[#E5B20F] sm:text-sm";
-const rowLink = "transition-colors hover:bg-[#F4F4F2]";
+const panelClass = "rounded-lg border border-[color:var(--border-color)] bg-[var(--white-cards)] p-4 shadow-sm";
+const panelTitle = "flex items-center gap-2 text-[11px] uppercase tracking-wider text-[color:var(--primary-text)]";
+const viewAll = "text-[11px] text-[color:var(--secondary-text)] hover:text-[color:var(--primary-text)]";
+
+/* ============================================================
+   GRID + LIST (isi file mein)
+   ============================================================ */
+
+// Stat cards: koi rang nahi, icon upar right. href ho to card link banta hai.
+const StatCards = ({ stats }) => (
+  <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+    {stats.map(({ id, label, value, icon: Icon, href }) => {
+      const className = "block rounded-lg border border-[color:var(--border-color)] bg-[var(--white-cards)] p-4 shadow-sm";
+      const content = (
+        <>
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-xs text-[color:var(--secondary-text)]">{label}</p>
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[var(--off-white-background)] text-[color:var(--secondary-text)]">
+              <Icon size={14} />
+            </span>
+          </div>
+          <p className="mt-4 break-words text-3xl text-[color:var(--primary-text)]">{value}</p>
+        </>
+      );
+      return href ? (
+        <Link key={id} href={href} className={`${className} transition-colors duration-300 hover:bg-[var(--off-white-background)]`}>
+          {content}
+        </Link>
+      ) : (
+        <div key={id} className={className}>
+          {content}
+        </div>
+      );
+    })}
+  </div>
+);
+
+// Panel: title (icon ke saath) + "View all" + rows
+const RowsList = ({ title, icon: TitleIcon, href, rows }) => (
+  <section className={panelClass}>
+    <div className="flex items-center justify-between gap-3">
+      <h2 className={panelTitle}>
+        <TitleIcon size={14} aria-hidden="true" />
+        {title}
+      </h2>
+      <Link href={href} className={viewAll}>
+        View all
+      </Link>
+    </div>
+
+    <ul className="mt-3">
+      {rows.map(({ id, to, image, icon: RowIcon, head, sub, meta, amount, chip, unread }) => (
+        <li key={id} className="border-t border-[color:var(--border-color)] first:border-t-0">
+          <Link
+            href={to}
+            className="flex w-full flex-wrap items-center gap-3 py-2.5 transition-colors duration-300 hover:bg-[var(--off-white-background)] sm:flex-nowrap"
+          >
+            {image && (
+              <span className="relative h-11 w-12 shrink-0 overflow-hidden rounded-md bg-[var(--off-white-background)]">
+                <Image src={image} alt={`${sub} (demo image)`} fill sizes="48px" className="object-cover" />
+              </span>
+            )}
+            {RowIcon && (
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--off-white-background)] text-[color:var(--secondary-text)]">
+                <RowIcon size={14} aria-hidden="true" />
+              </span>
+            )}
+
+            <span className="min-w-0 flex-1 basis-40">
+              <span className="block truncate text-xs text-[color:var(--primary-text)]">
+                <span className="font-semibold">{head}</span>
+                {sub && <> · {sub}</>}
+              </span>
+              {meta && <span className="block truncate text-[11px] text-[color:var(--secondary-text)]">{meta}</span>}
+            </span>
+
+            <span className="flex items-center gap-3">
+              {amount && <span className="whitespace-nowrap text-xs text-[color:var(--primary-text)]">{amount}</span>}
+              {chip && <span className={`whitespace-nowrap rounded-full border px-2.5 py-0.5 text-[10px] ${statusClass[chip]}`}>{chip}</span>}
+              {unread && <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--primary-yellow)]" aria-label="Unread" />}
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </section>
+);
 
 /* ============================================================
    PAGE
    ============================================================ */
 
-const CustomerDashboardPage = () => (
-  <main className="p-4 sm:p-6 lg:p-8">
-    {/* Heading + Upload button */}
-    <div className="flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <h1 className="text-2xl font-extrabold text-[#292929] sm:text-3xl">Dashboard</h1>
-        <p className="mt-1 text-xs text-[#45484D]">Sample dashboard data shown for demonstration purposes.</p>
-      </div>
+const CustomerDashboardPage = () => {
+  // Data ko rows ke format mein badalna
+  const orderRows = orders.map((o) => ({
+    id: o.id, to: `/customer/orders/${o.code}`, image: o.image, head: `Order #${o.code}`, sub: o.item, meta: o.date, amount: o.amount, chip: o.status,
+  }));
+  const notificationRows = notifications.map((n) => ({
+    id: n.id, to: "/customer/inquiries", icon: MessageSquare, head: n.supplier, sub: "replied to your inquiry", meta: `${n.detail} · ${n.time}`, unread: n.unread,
+  }));
 
-      <Link
-        href="/customer/used-materials"
-        className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#FDC716] px-5 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#E5B20F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#292929]"
-      >
-        <CloudUpload size={18} aria-hidden="true" />
-        Upload Reused Material
-      </Link>
-    </div>
-
-    {/* Stat cards */}
-    <section className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {stats.map((stat) => (
-        <BmCustomerStatCard key={stat.id} {...stat} />
-      ))}
-    </section>
-
-    {/* Shortcuts */}
-    <section aria-label="Shortcuts" className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {shortcuts.map(({ id, label, href, icon: ShortcutIcon }) => {
-        const className =
-          "flex h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-xl bg-[#202124] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#45484D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FDC716]";
-        const content = (
-          <>
-            <span className="flex items-center gap-3">
-              <ShortcutIcon size={18} aria-hidden="true" />
-              {label}
-            </span>
-            <ArrowRight size={16} aria-hidden="true" />
-          </>
-        );
-
-        return href ? (
-          <Link key={id} href={href} className={className}>
-            {content}
-          </Link>
-        ) : (
-          <button key={id} type="button" className={className}>
-            {content}
-          </button>
-        );
-      })}
-    </section>
-
-    {/* Recent orders + notifications */}
-    <div className="mt-6 grid gap-4 xl:grid-cols-2">
-      {/* Recent Orders */}
-      <section className={panel}>
-        <div className="flex items-center justify-between border-b border-[#E2E4E7]">
-          <h2 className="flex items-center gap-3 text-base font-bold text-[#202124] sm:text-lg">
-            <span className="flex h-12 w-12 items-center justify-center rounded-br-xl bg-[#FDC716] text-[#202124]">
-              <Package size={22} aria-hidden="true" />
-            </span>
-            Recent Orders
-          </h2>
-          <Link href="/customer/orders" className={viewAll}>
-            View All <ArrowRight size={14} aria-hidden="true" />
-          </Link>
+  return (
+    <main className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">
+      {/* Heading + Upload button */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl text-[color:var(--primary-text)] sm:text-3xl">Dashboard</h1>
+          <p className="mt-1 text-xs text-[color:var(--secondary-text)]">Sample dashboard data shown for demonstration purposes.</p>
         </div>
 
-        <ul className="divide-y divide-[#E2E4E7]">
-          {orders.map(({ id, code, item, date, status, amount, image }) => (
-            <li key={id}>
-              <Link href={`/customer/orders/${code}`} className={`flex flex-wrap items-center gap-3 px-4 py-3 sm:flex-nowrap ${rowLink}`}>
-                <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded-md bg-[#E2E4E7]">
-                  <Image src={image} alt={`${item} (demo image)`} fill sizes="56px" className="object-cover" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-[#202124]">Order #{code}</p>
-                  <p className="truncate text-xs text-[#45484D]">
-                    {item} · {date}
-                  </p>
-                </div>
-                <span className={`rounded-full px-3 py-1 text-xs font-medium ${statusClass[status]}`}>{status}</span>
-                <p className="w-24 text-right text-sm font-bold text-[#202124]">{amount}</p>
-                <ChevronRight size={16} className="hidden shrink-0 text-[#A7ADB4] sm:block" aria-hidden="true" />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Recent Notifications: supplier ke replies */}
-      <section className={panel}>
-        <div className="flex items-center justify-between border-b border-[#E2E4E7]">
-          <h2 className="flex items-center gap-3 text-base font-bold text-[#202124] sm:text-lg">
-            <span className="flex h-12 w-12 items-center justify-center rounded-br-xl bg-[#FDC716] text-[#202124]">
-              <Bell size={22} aria-hidden="true" />
-            </span>
-            Recent Notifications
-          </h2>
-          <Link href="/customer/notifications" className={viewAll}>
-            View All <ArrowRight size={14} aria-hidden="true" />
-          </Link>
-        </div>
-
-        <ul className="divide-y divide-[#E2E4E7]">
-          {notifications.map(({ id, supplier, detail, time, unread }) => (
-            <li key={id}>
-              <Link href="/customer/inquiries" className={`flex items-start gap-3 px-4 py-3 ${rowLink}`}>
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                  <MessageSquare size={18} aria-hidden="true" />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-[#202124]">{supplier} replied to your inquiry</p>
-                  <p className="text-xs text-[#45484D]">{detail}</p>
-                  <p className="mt-0.5 text-xs text-[#A7ADB4]">{time}</p>
-                </div>
-                {unread && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#FDC716]" aria-label="Unread" />}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
-
-    {/* Recent Activity */}
-    {/* <section className={`${panel} mt-4`}>
-      <div className="flex items-center justify-between border-b border-[#E2E4E7]">
-        <h2 className="flex items-center gap-3 text-base font-bold text-[#202124] sm:text-lg">
-          <span className="flex h-12 w-12 items-center justify-center rounded-br-xl bg-[#FDC716] text-[#202124]">
-            <Activity size={22} aria-hidden="true" />
-          </span>
-          Recent Activity
-        </h2>
-        <span className={viewAll}>
-          View All <ArrowRight size={14} aria-hidden="true" />
-        </span>
+        <Link
+          href="/customer/used-materials"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[var(--primary-yellow)] px-5 text-sm text-[color:var(--charcoal-black)] transition-colors duration-300 hover:bg-[var(--hover-yellow)]"
+        >
+          <CloudUpload size={16} aria-hidden="true" />
+          Upload Reused Material
+        </Link>
       </div>
 
-      <ul className="divide-y divide-[#E2E4E7]">
-        {activities.map(({ id, text, time, icon: ActivityIcon }) => (
-          <li key={id} className="flex items-center gap-3 px-4 py-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F4F2] text-[#202124]">
-              <ActivityIcon size={18} aria-hidden="true" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-[#202124]">{text}</p>
-              <p className="text-xs text-[#A7ADB4]">{time}</p>
-            </div>
-            <span className="h-2 w-2 shrink-0 rounded-full bg-[#FDC716]" aria-hidden="true" />
-          </li>
-        ))}
-      </ul>
-    </section> */}
-  </main>
-);
+      <StatCards stats={stats} />
+
+      {/* Shortcuts */}
+      <section aria-label="Shortcuts" className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {shortcuts.map(({ id, label, href, icon: ShortcutIcon }) => {
+          const className =
+            "flex h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg bg-[var(--charcoal-black)] px-4 text-sm text-[color:var(--white-cards)] transition-opacity duration-300 hover:opacity-85";
+          const content = (
+            <>
+              <span className="flex items-center gap-3">
+                <ShortcutIcon size={16} aria-hidden="true" />
+                {label}
+              </span>
+              <ArrowRight size={14} aria-hidden="true" />
+            </>
+          );
+
+          return href ? (
+            <Link key={id} href={href} className={className}>
+              {content}
+            </Link>
+          ) : (
+            <button key={id} type="button" className={className}>
+              {content}
+            </button>
+          );
+        })}
+      </section>
+
+      {/* Recent orders + notifications */}
+      <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <RowsList title="Recent Orders" icon={Package} href="/customer/orders" rows={orderRows} />
+        <RowsList title="Recent Notifications" icon={Bell} href="/customer/notifications" rows={notificationRows} />
+      </div>
+    </main>
+  );
+};
 
 export default CustomerDashboardPage;
